@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,7 +25,10 @@ public class Robot extends TimedRobot
   private Joystick throttle;
   private Joystick steer;
 
+  private Compressor compressor;
+
   private Drivetrain drivetrain;
+  private Intake intake;
 
   @Override
   public void robotInit()
@@ -36,6 +40,12 @@ public class Robot extends TimedRobot
 
     drivetrain = new Drivetrain();
     drivetrain.stop();
+
+    intake = new Intake();
+    intake.stop();
+
+    compressor = new Compressor();
+    compressor.setClosedLoopControl(false);
   }
 
   /**
@@ -90,6 +100,37 @@ public class Robot extends TimedRobot
   public void teleopPeriodic()
   {
     drivetrain.move(-throttle.getY(), steer.getX());
+
+    if (throttle.getRawButton(7))
+    {
+      compressor.start();
+    }
+    else if (throttle.getRawButton(8))
+    {
+      compressor.stop();
+    }
+
+    if (steer.getRawButton(4))
+    {
+      intake.retract();
+    }
+    else if (steer.getRawButton(6))
+    {
+      intake.deploy();
+    }
+
+    if (steer.getRawButton(3))
+    {
+      intake.spin();
+    }
+    else if (steer.getRawButton(1))
+    {
+      intake.reverse();
+    }
+    else
+    {
+      intake.stop();
+    }
   }
 
   @Override
