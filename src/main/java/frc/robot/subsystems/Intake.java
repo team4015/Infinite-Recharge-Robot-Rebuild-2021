@@ -38,7 +38,7 @@ public class Intake extends SubsystemBase
   {
     if (deployed == true)
     {
-      intakeMotor.set(0.25);
+      intakeMotor.set(-0.25);
     }
   }
 
@@ -51,7 +51,7 @@ public class Intake extends SubsystemBase
   {
     if (deployed == true)
     {
-      intakeMotor.set(-0.25);
+      intakeMotor.set(0.25);
     }
   }
 
