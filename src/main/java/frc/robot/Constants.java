@@ -11,8 +11,8 @@ public final class Constants
     public static final int CONVEYOR_SPARK = 9;
     public static final int SHOOTER_VICTOR = 2;
 
-    public static final int CONTROLLER_XBOX_PORT_DRIVER = 1;
-    public static final int CONTROLLER_XBOX_PORT_SUBSYSTEM = 0;
+    public static final int THROTTLE_JOYSTICK = 0;
+    public static final int STEER_JOYSTICK = 1;
 
     //PISTONS
     public static final int SHOOTER_PISTON_DEPLOY = 2;
@@ -21,6 +21,7 @@ public final class Constants
     public static final int INTAKE_PISTON_RETRACT = 6;
     public static final int CLIMBER_PISON_DEPLOY = 1; //tbd
     public static final int CLIMBER_PISON_RETRACT = 0;
+    
     //RING LIGHT
     public static final int RING_LIGHT = 5;//tbd
 }
