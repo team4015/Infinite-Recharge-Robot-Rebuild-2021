@@ -15,7 +15,7 @@ public class Match extends TimedRobot
 {
   private Command m_autonomousCommand;
   private Command teleop;
-  private Robot robot;
+  //private Robot robot;
 
   @Override
   public void robotInit()
@@ -79,7 +79,7 @@ public class Match extends TimedRobot
   @Override
   public void teleopPeriodic()
   {
-    
+
   }
 
   @Override
