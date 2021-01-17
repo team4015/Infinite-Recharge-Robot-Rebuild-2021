@@ -3,7 +3,7 @@ package frc.robot.commands.teleop;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Controls.Driver;
+import frc.robot.controls.Driver;
 import frc.robot.Robot;
 
 public class TeleopIntake extends CommandBase
