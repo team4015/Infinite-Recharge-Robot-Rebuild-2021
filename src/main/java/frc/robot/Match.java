@@ -1,6 +1,6 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.teleop.*;
@@ -15,7 +15,7 @@ public class Match extends TimedRobot
 {
   private Command m_autonomousCommand;
   private Command teleop;
-  //private Robot robot;
+  private Robot robot;
 
   @Override
   public void robotInit()
