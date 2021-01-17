@@ -3,7 +3,7 @@ package frc.robot.commands.teleop;
 import frc.robot.subsystems.Conveyor;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Driver;
+import frc.robot.Controls.Driver;
 import frc.robot.Robot;
 
 public class TeleopConveyor extends CommandBase
