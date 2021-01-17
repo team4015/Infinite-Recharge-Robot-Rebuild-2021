@@ -2,7 +2,7 @@ package frc.robot.commands.teleop;
 
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Driver;
+import frc.robot.controls.Driver;
 import frc.robot.Robot;
 
 public class TeleopDrivetrain extends CommandBase

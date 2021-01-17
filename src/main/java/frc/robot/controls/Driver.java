@@ -1,6 +1,7 @@
-package frc.robot;
+package frc.robot.controls;
 
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.Constants;
 
 public class Driver
 {
