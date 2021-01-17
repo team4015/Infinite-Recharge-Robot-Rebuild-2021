@@ -8,12 +8,14 @@ public class Robot
   public Drivetrain drivetrain;
   public Intake intake;
   public Compressor compressor;
+  public Conveyor conveyor;
 
   public Robot()
   {
     drivetrain = new Drivetrain();
     intake = new Intake();
     compressor = new Compressor();
+    conveyor = new Conveyor();
 
     init();
   }
@@ -23,6 +25,7 @@ public class Robot
     drivetrain.stop();
     intake.stop();
     intake.retract();
+    conveyor.stop();
     compressor.setClosedLoopControl(false);
   }
 }
