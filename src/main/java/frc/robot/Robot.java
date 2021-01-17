@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -35,8 +36,8 @@ public class Robot extends TimedRobot
   {
     m_robotContainer = new RobotContainer();
 
-    throttle = new Joystick(0);
-    steer = new Joystick(1);
+    throttle = new Joystick(Constants.THROTTLE_JOYSTICK);
+    steer = new Joystick(Constants.STEER_JOYSTICK);
 
     drivetrain = new Drivetrain();
     drivetrain.stop();
@@ -101,29 +102,29 @@ public class Robot extends TimedRobot
   {
     drivetrain.move(-throttle.getY(), steer.getX());
 
-    if (throttle.getRawButton(7))
+    if (throttle.getRawButton(Constants.START_COMPRESSOR))
     {
       compressor.start();
     }
-    else if (throttle.getRawButton(8))
+    else if (throttle.getRawButton(Constants.STOP_COMPRESSOR))
     {
       compressor.stop();
     }
 
-    if (steer.getRawButton(4))
+    if (steer.getRawButton(Constants.RETRACT_INTAKE))
     {
       intake.retract();
     }
-    else if (steer.getRawButton(6))
+    else if (steer.getRawButton(Constants.DEPLOY_INTAKE))
     {
       intake.deploy();
     }
 
-    if (steer.getRawButton(3))
+    if (steer.getRawButton(Constants.SPIN_INTAKE))
     {
       intake.spin();
     }
-    else if (steer.getRawButton(1))
+    else if (steer.getRawButton(Constants.REVERSE_INTAKE))
     {
       intake.reverse();
     }
