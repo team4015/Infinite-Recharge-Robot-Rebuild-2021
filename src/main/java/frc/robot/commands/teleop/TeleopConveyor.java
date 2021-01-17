@@ -2,6 +2,7 @@ package frc.robot.commands.teleop;
 
 import frc.robot.subsystems.Conveyor;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Driver;
 import frc.robot.Robot;
 
@@ -27,11 +28,11 @@ public class TeleopConveyor extends CommandBase
   @Override
   public void execute()
   {
-    if (Driver.getThrottleButton(3))
+    if (Driver.getThrottleButton(Constants.FEED_CONVEYOR))
     {
         conveyor.feed();
     }
-    else if (Driver.getThrottleButton(4))
+    else if (Driver.getThrottleButton(Constants.REVERSE_CONVEYOR))
     {
         conveyor.reverse();
     }
