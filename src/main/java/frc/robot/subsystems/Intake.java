@@ -11,32 +11,30 @@ public class Intake extends SubsystemBase
 {
   private CANSparkMax intakeMotor;
   private DoubleSolenoid intakePiston;
-
   private boolean deployed;
 
   public Intake()
   {
     intakeMotor = new CANSparkMax(Constants.INTAKE_CAN_SPARK, MotorType.kBrushless); // Motor is Brushless
     intakePiston = new DoubleSolenoid(Constants.INTAKE_PISTON_DEPLOY, Constants.INTAKE_PISTON_RETRACT);
-
     deployed = false;
   }
 
   public void deploy()
   {
-    deployed = true;
     intakePiston.set(Value.kForward);
+    deployed = true;
   }
 
   public void retract()
   {
-    deployed = false;
     intakePiston.set(Value.kReverse);
+    deployed = false;
   }
 
   public void spin()
   {
-    if (deployed == true)
+    if (deployed)
     {
       intakeMotor.set(-0.25);
     }
@@ -49,7 +47,7 @@ public class Intake extends SubsystemBase
 
   public void reverse()
   {
-    if (deployed == true)
+    if (deployed)
     {
       intakeMotor.set(0.25);
     }
