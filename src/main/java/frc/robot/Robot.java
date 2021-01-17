@@ -22,6 +22,7 @@ public class Robot
   {
     drivetrain.stop();
     intake.stop();
+    intake.retract();
     compressor.setClosedLoopControl(false);
   }
 }

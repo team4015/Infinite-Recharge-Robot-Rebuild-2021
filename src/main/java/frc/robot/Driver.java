@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class Driver
 {
-    private static Joystick throttle = new Joystick(Constants.THROTTLE_JOYSTICK);
-    private static Joystick steer = new Joystick(Constants.STEER_JOYSTICK);
+    public static Joystick throttle = new Joystick(Constants.THROTTLE_JOYSTICK);
+    public static Joystick steer = new Joystick(Constants.STEER_JOYSTICK);
 
     public static double getThrottle()
     {
