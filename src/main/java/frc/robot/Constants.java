@@ -23,6 +23,7 @@ public final class Constants
     public static final int REVERSE_INTAKE = 3;
     public static final int FEED_CONVEYOR = 3;
     public static final int REVERSE_CONVEYOR = 4;
+    public static final int CHARGE_SHOOTER = 1;
 
     // PISTONS
     public static final int SHOOTER_PISTON_DEPLOY = 2;

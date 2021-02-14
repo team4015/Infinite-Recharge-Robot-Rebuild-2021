@@ -12,7 +12,8 @@ public class Teleop extends ParallelCommandGroup
         (
             new TeleopDrivetrain(robot), 
             new TeleopIntake(robot),
-            new TeleopConveyor(robot)
+            new TeleopConveyor(robot),
+            new TeleopShooter(robot)
         );
     }
 }

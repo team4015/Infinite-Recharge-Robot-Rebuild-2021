@@ -9,6 +9,7 @@ public class Robot
   public Intake intake;
   public Compressor compressor;
   public Conveyor conveyor;
+  public Shooter shooter;
 
   public Robot()
   {
@@ -16,6 +17,7 @@ public class Robot
     intake = new Intake();
     compressor = new Compressor();
     conveyor = new Conveyor();
+    shooter = new Shooter();
 
     init();
   }
@@ -26,6 +28,7 @@ public class Robot
     intake.stop();
     intake.retract();
     conveyor.stop();
+    shooter.stop();
     compressor.setClosedLoopControl(false);
   }
 }
