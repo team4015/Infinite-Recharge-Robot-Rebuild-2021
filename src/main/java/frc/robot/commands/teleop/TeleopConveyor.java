@@ -38,7 +38,7 @@ public class TeleopConveyor extends CommandBase
     }
     else
     {
-        conveyor.stop();
+        conveyor.standby();
     }
   }
 
