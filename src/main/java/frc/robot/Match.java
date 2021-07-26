@@ -3,6 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.commands.teleop.*;
 
 /**
@@ -16,12 +18,15 @@ public class Match extends TimedRobot
   private Command m_autonomousCommand;
   private Command teleop;
   private Robot robot;
+  private UsbCamera camera;
 
   @Override
   public void robotInit()
   {
     robot = new Robot();
     teleop = new Teleop(robot);
+
+    camera = CameraServer.getInstance().startAutomaticCapture();
   }
 
   /**
