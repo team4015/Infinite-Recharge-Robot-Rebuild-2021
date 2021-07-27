@@ -28,7 +28,7 @@ public class TeleopShooter extends CommandBase
   @Override
   public void execute()
   {
-    if (Driver.getThrottleButton(Constants.CHARGE_SHOOTER))
+    if (Driver.getSteerButton(Constants.CHARGE_SHOOTER))
     {
       shooter.spin();
     }

@@ -46,7 +46,7 @@ public class Conveyor extends SubsystemBase
 
   public void feed()
   {
-    if (!shooterSwitch.get())
+    if (!shooterSwitch.get() || Driver.getSteerButton(Constants.CHARGE_SHOOTER))
     {
       conveyorMotor.set(0.75);
     }
