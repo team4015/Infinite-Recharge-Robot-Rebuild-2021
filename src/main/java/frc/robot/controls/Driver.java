@@ -27,4 +27,9 @@ public class Driver
     {
         return steer.getRawButton(button);
     }
+
+    public static boolean getSteerButtonPressed(int button)
+    {
+        return steer.getRawButtonPressed(button);
+    }
 }
