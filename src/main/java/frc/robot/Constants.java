@@ -21,8 +21,8 @@ public final class Constants
     public static final int RETRACT_INTAKE = 4;
     public static final int SPIN_INTAKE = 1;
     public static final int REVERSE_INTAKE = 3;
-    public static final int FEED_CONVEYOR = 3;
-    public static final int REVERSE_CONVEYOR = 4;
+    public static final int FEED_CONVEYOR = 4;
+    public static final int REVERSE_CONVEYOR = 3;
     public static final int CHARGE_SHOOTER = 1;
 
     // PISTONS
@@ -30,8 +30,13 @@ public final class Constants
     public static final int SHOOTER_PISTON_RETRACT = 3;
     public static final int INTAKE_PISTON_DEPLOY = 7;
     public static final int INTAKE_PISTON_RETRACT = 6;
-    public static final int CLIMBER_PISON_DEPLOY = 1; //tbd
+    public static final int CLIMBER_PISON_DEPLOY = 1;
     public static final int CLIMBER_PISON_RETRACT = 0;
+
+    // LIMIT SWITCHES
+    public static final int INTAKE_SWITCH = 0;
+    public static final int CONVEYOR_SWITCH = 1;
+    public static final int SHOOTER_SWITCH = 2;
 
     //RING LIGHT
     public static final int RING_LIGHT = 5;//tbd
