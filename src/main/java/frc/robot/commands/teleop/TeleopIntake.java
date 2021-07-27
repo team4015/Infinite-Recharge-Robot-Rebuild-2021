@@ -32,7 +32,7 @@ public class TeleopIntake extends CommandBase
     {
       intake.spin();
     }
-    else if (Driver.getSteerButton(Constants.REVERSE_INTAKE))
+    else if (Driver.getSteerButton(Constants.REVERSE_INTAKE) || Driver.getThrottleButton(Constants.REVERSE_CONVEYOR))
     {
       intake.reverse();
     }
