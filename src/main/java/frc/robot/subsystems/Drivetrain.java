@@ -25,8 +25,8 @@ public class Drivetrain extends SubsystemBase
 
   public void move(double speed, double turn)
   {
-    setLeftMotors(speed);
-    setRightMotors(speed);
+    setLeftMotors(speed + turn);
+    setRightMotors(speed - turn);
   }
 
   public void stop()
