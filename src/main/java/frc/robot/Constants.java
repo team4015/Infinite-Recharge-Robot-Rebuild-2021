@@ -40,6 +40,9 @@ public final class Constants
     public static final int CONVEYOR_SWITCH = 1;
     public static final int SHOOTER_SWITCH = 2;
 
-    //RING LIGHT
+    // RING LIGHT
     public static final int RING_LIGHT = 5;//tbd
+
+    // MISCELLANIOUS
+    public static final double DEADZONE = 0.15;
 }
