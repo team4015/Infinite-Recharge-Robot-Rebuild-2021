@@ -2,6 +2,7 @@ package frc.robot.controls;
 
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants;
+import java.lang.Math;
 
 public class Driver
 {
@@ -10,12 +11,30 @@ public class Driver
 
     public static double getThrottle()
     {
-        return -throttle.getY();
+        double throttleValue = 0;
+        
+        throttleValue = -throttle.getY();
+
+        if (Math.abs(throttleValue) < Constants.DEADZONE)
+        {
+            return 0;
+        }
+
+        return throttleValue;
     }
 
     public static double getSteer()
     {
-        return steer.getX();
+        double steerValue = 0;
+
+        steerValue = steer.getX();
+
+        if (Math.abs(steerValue) < Constants.DEADZONE)
+        {
+            return 0;
+        }
+
+        return steerValue;
     }
 
     public static boolean getThrottleButton(int button)

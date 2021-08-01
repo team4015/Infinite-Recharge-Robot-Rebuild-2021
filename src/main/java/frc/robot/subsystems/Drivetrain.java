@@ -5,9 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase
@@ -17,32 +15,36 @@ public class Drivetrain extends SubsystemBase
   private Talon rightFrontMotor;
   private Talon rightRearMotor;
 
-  private SpeedControllerGroup leftMotors;
-  private SpeedControllerGroup rightMotors;
-
-  private DifferentialDrive chassis;
-
   public Drivetrain()
   {
     leftFrontMotor = new Talon(Constants.LEFT_MOTOR_FRONT);
     leftRearMotor = new Talon(Constants.LEFT_MOTOR_REAR);
     rightFrontMotor = new Talon(Constants.RIGHT_MOTOR_FRONT);
     rightRearMotor = new Talon(Constants.RIGHT_MOTOR_REAR);
-
-    leftMotors = new SpeedControllerGroup(leftFrontMotor, leftRearMotor);
-    rightMotors = new SpeedControllerGroup(rightFrontMotor, rightRearMotor);
-
-    chassis = new DifferentialDrive(leftMotors, rightMotors);
   }
 
   public void move(double speed, double turn)
   {
-    chassis.arcadeDrive(speed, turn);
+    setLeftMotors(speed + turn);
+    setRightMotors(speed - turn);
+    // The + and - turn adds the steer value to the speed of each side of the drivetrain allowing the robot to turn.
   }
 
   public void stop()
   {
     move(0, 0);
+  }
+
+  private void setLeftMotors(double speed)
+  {
+    leftFrontMotor.set(speed);
+    leftRearMotor.set(speed);
+  }
+
+  private void setRightMotors(double speed)
+  {
+    rightFrontMotor.set(-speed);
+    rightRearMotor.set(-speed);
   }
 
   @Override
