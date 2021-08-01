@@ -2,6 +2,7 @@ package frc.robot;
 
 public final class Constants
 {
+    // HARDWARE PORTS
     public static final int LEFT_MOTOR_FRONT = 3;
     public static final int LEFT_MOTOR_REAR = 5;
     public static final int RIGHT_MOTOR_FRONT = 4;
@@ -43,6 +44,7 @@ public final class Constants
     // RING LIGHT
     public static final int RING_LIGHT = 5;//tbd
 
-    // MISCELLANIOUS
+    // SETTINGS
     public static final double DEADZONE = 0.15;
+    public static final double SHOOTER_SPEED = 0.55;
 }

@@ -27,6 +27,7 @@ public class Drivetrain extends SubsystemBase
   {
     setLeftMotors(speed + turn);
     setRightMotors(speed - turn);
+    // The + and - turn adds the steer value to the speed of each side of the drivetrain allowing the robot to turn.
   }
 
   public void stop()

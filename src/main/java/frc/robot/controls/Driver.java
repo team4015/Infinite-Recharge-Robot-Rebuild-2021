@@ -9,31 +9,32 @@ public class Driver
     public static Joystick throttle = new Joystick(Constants.THROTTLE_JOYSTICK);
     public static Joystick steer = new Joystick(Constants.STEER_JOYSTICK);
 
-    private static double throttleVal = 0;
-    private static double steerVal = 0;
-
     public static double getThrottle()
     {
-        throttleVal = -throttle.getY();
+        double throttleValue = 0;
+        
+        throttleValue = -throttle.getY();
 
-        if (Math.abs(throttleVal) < Constants.DEADZONE)
+        if (Math.abs(throttleValue) < Constants.DEADZONE)
         {
-            throttleVal = 0;
+            return 0;
         }
 
-        return throttleVal;
+        return throttleValue;
     }
 
     public static double getSteer()
     {
-        steerVal = steer.getX();
+        double steerValue = 0;
 
-        if (Math.abs(steerVal) < Constants.DEADZONE)
+        steerValue = steer.getX();
+
+        if (Math.abs(steerValue) < Constants.DEADZONE)
         {
-            steerVal = 0;
+            return 0;
         }
 
-        return steerVal;
+        return steerValue;
     }
 
     public static boolean getThrottleButton(int button)

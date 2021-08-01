@@ -15,7 +15,7 @@ public class Shooter extends SubsystemBase
 
   public void spin()
   {
-    motor.set(-0.65);
+    motor.set(-Constants.SHOOTER_SPEED);
   }
 
   public void stop()
