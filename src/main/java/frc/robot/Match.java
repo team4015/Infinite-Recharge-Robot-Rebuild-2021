@@ -8,6 +8,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 import frc.robot.commands.teleop.*;
 
 /**
@@ -30,7 +31,7 @@ public class Match extends TimedRobot
   Mat inputPixels = new Mat();
   Mat outputPixels = new Mat();
 
-  private void runCameraFeeds()
+  private void getCameraFeeds()
   {
     while (true)
     {
@@ -39,7 +40,7 @@ public class Match extends TimedRobot
         continue;
       }
 
-      outputPixels = inputPixels;
+      Imgproc.cvtColor(inputPixels, outputPixels, Imgproc.COLOR_BGR2GRAY);
       videoOutput.putFrame(outputPixels);
     }
   }
@@ -50,8 +51,8 @@ public class Match extends TimedRobot
     robot = new Robot();
     teleop = new Teleop(robot);
 
-    Thread getCameraFeed = new Thread(() -> runCameraFeeds());
-    getCameraFeed.start();
+    Thread cameraFeed = new Thread(() -> getCameraFeeds());
+    cameraFeed.start();
   }
 
   /**
