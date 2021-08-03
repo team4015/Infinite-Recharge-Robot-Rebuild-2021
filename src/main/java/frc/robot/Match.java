@@ -3,8 +3,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import org.opencv.core.Mat;
 import frc.robot.commands.teleop.*;
 
 /**
@@ -18,7 +21,28 @@ public class Match extends TimedRobot
   private Command m_autonomousCommand;
   private Command teleop;
   private Robot robot;
-  private UsbCamera camera;
+
+  UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("Unprocessed", 0);
+    
+  CvSink videoInput = CameraServer.getInstance().getVideo();
+  CvSource videoOutput = CameraServer.getInstance().putVideo("Processed", 640, 480);
+
+  Mat inputPixels = new Mat();
+  Mat outputPixels = new Mat();
+
+  private void runCameraFeeds()
+  {
+    while (true)
+    {
+      if (videoInput.grabFrame(inputPixels) == 0)
+      {
+        continue;
+      }
+
+      outputPixels = inputPixels;
+      videoOutput.putFrame(outputPixels);
+    }
+  }
 
   @Override
   public void robotInit()
@@ -26,7 +50,8 @@ public class Match extends TimedRobot
     robot = new Robot();
     teleop = new Teleop(robot);
 
-    camera = CameraServer.getInstance().startAutomaticCapture();
+    Thread getCameraFeed = new Thread(() -> runCameraFeeds());
+    getCameraFeed.start();
   }
 
   /**

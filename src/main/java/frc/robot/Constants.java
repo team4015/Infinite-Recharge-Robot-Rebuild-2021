@@ -42,7 +42,7 @@ public final class Constants
     public static final int SHOOTER_SWITCH = 2;
 
     // RING LIGHT
-    public static final int RING_LIGHT = 5;//tbd
+    public static final int RING_LIGHT = 5;
 
     // SETTINGS
     public static final double DEADZONE = 0.15;
