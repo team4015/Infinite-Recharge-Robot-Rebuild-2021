@@ -7,7 +7,12 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
+
+import com.fasterxml.jackson.databind.cfg.ContextAttributes.Impl;
+
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import frc.robot.commands.teleop.*;
 
@@ -23,26 +28,34 @@ public class Match extends TimedRobot
   private Command teleop;
   private Robot robot;
 
-  UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("Unprocessed", 0);
-    
-  CvSink videoInput = CameraServer.getInstance().getVideo();
-  CvSource videoOutput = CameraServer.getInstance().putVideo("Processed", 640, 480);
-
-  Mat inputPixels = new Mat();
-  Mat outputPixels = new Mat();
-
   private void getCameraFeeds()
   {
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("Unprocessed", 0);
+    
+    CvSink videoInput = CameraServer.getInstance().getVideo();
+    CvSource videoOutput = CameraServer.getInstance().putVideo("Processed", 640, 480);
+
+    Mat unprocessedPixels = new Mat();
+    
     while (true)
     {
-      if (videoInput.grabFrame(inputPixels) == 0)
+      if (videoInput.grabFrame(unprocessedPixels) == 0)
       {
         continue;
       }
 
-      Imgproc.cvtColor(inputPixels, outputPixels, Imgproc.COLOR_BGR2GRAY);
-      videoOutput.putFrame(outputPixels);
+      videoOutput.putFrame(processFrames(unprocessedPixels));
     }
+  }
+
+  private Mat processFrames(Mat unprocessedPixels)
+  {
+    Mat processedPixels = new Mat();
+
+    Imgproc.cvtColor(unprocessedPixels, processedPixels, Imgproc.COLOR_BGR2HSV);
+    Core.inRange(processedPixels, new Scalar(40, 0, 175), new Scalar(255, 255, 255), processedPixels);
+
+    return processedPixels;
   }
 
   @Override
