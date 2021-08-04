@@ -10,7 +10,7 @@ public class Robot
   public Compressor compressor;
   public Conveyor conveyor;
   public Shooter shooter;
-  public Ringlight ringlight;
+  public Vision vision;
 
   public Robot()
   {
@@ -19,7 +19,7 @@ public class Robot
     compressor = new Compressor();
     conveyor = new Conveyor();
     shooter = new Shooter();
-    ringlight = new Ringlight();
+    vision = new Vision();
 
     init();
   }
@@ -32,6 +32,6 @@ public class Robot
     conveyor.stop();
     shooter.stop();
     compressor.setClosedLoopControl(false);
-    ringlight.off();
+    vision.stop();
   }
 }

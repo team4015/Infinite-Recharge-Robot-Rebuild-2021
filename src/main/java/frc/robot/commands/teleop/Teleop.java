@@ -13,7 +13,7 @@ public class Teleop extends ParallelCommandGroup
             new TeleopIntake(robot),
             new TeleopConveyor(robot),
             new TeleopShooter(robot),
-            new TeleopRinglight(robot)
+            new TeleopVision(robot)
         );
     }
 }

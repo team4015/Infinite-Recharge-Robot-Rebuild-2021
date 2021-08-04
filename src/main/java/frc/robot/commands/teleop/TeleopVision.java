@@ -1,28 +1,28 @@
 package frc.robot.commands.teleop;
 
-import frc.robot.subsystems.Ringlight;
+import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.controls.Driver;
 import frc.robot.Robot;
 
-public class TeleopRinglight extends CommandBase
+public class TeleopVision extends CommandBase
 {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Ringlight ringlight;
+  private final Vision vision;
   private boolean on = false;
 
-  public TeleopRinglight(Robot robot)
+  public TeleopVision(Robot robot)
   {
-    ringlight = robot.ringlight;
-    addRequirements(ringlight);
+    vision = robot.vision;
+    addRequirements(vision);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize()
   {
-    ringlight.off();
+    vision.stop();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,11 +36,11 @@ public class TeleopRinglight extends CommandBase
 
     if (on)
     {
-      ringlight.on();
+      vision.start();
     }
     else
     {
-      ringlight.off();
+      vision.stop();
     }
   }
 
@@ -48,7 +48,7 @@ public class TeleopRinglight extends CommandBase
   @Override
   public void end(boolean interrupted)
   {
-    ringlight.off();
+    vision.stop();
   }
 
   // Returns true when the command should end.
