@@ -47,4 +47,6 @@ public final class Constants
     // SETTINGS
     public static final double DEADZONE = 0.15;
     public static final double SHOOTER_SPEED = 0.55;
+    public static final double MAX_THROTTLE_SPEED = 0.75;
+    public static final double MAX_STEER_SPEED = 0.75;
 }

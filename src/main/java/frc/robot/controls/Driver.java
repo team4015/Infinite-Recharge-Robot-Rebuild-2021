@@ -13,7 +13,7 @@ public class Driver
     {
         double throttleValue = 0;
         
-        throttleValue = -throttle.getY();
+        throttleValue = -throttle.getY() * Constants.MAX_THROTTLE_SPEED;
 
         if (Math.abs(throttleValue) < Constants.DEADZONE)
         {
@@ -27,7 +27,7 @@ public class Driver
     {
         double steerValue = 0;
 
-        steerValue = steer.getX();
+        steerValue = steer.getX() * Constants.MAX_STEER_SPEED;
 
         if (Math.abs(steerValue) < Constants.DEADZONE)
         {
