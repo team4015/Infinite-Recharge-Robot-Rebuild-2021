@@ -11,7 +11,6 @@ import java.util.List;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
-import org.opencv.core.Scalar;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
@@ -19,14 +18,21 @@ import org.opencv.imgproc.Imgproc;
 public class Vision extends SubsystemBase
 {
     private Solenoid ringlight;
-    Thread cameraFeed;
+    private Thread cameraFeed;
     private boolean runFeed;
+    private double height;
+    private double width;
+    private Point targetCenter;
 
     public Vision()
     {
         ringlight = new Solenoid(Constants.RING_LIGHT);
         cameraFeed = new Thread(() -> getCameraFeed());
         cameraFeed.start();
+
+        height = 0;
+        width = 0;
+        targetCenter = new Point();
     }
 
     private void getCameraFeed()
@@ -59,14 +65,17 @@ public class Vision extends SubsystemBase
         List<MatOfPoint> contours = new ArrayList<>();
         Point [] endPoints = new Point[2];
         
-        Core.inRange(image, new Scalar(40, 0, 175), new Scalar(255, 255, 255), image);
+        Core.inRange(image, Constants.VISION_THRESHOLD, Constants.WHITE, image);
+        Imgproc.dilate(image, image, new Mat(3, 3, 0));
+
         Imgproc.findContours(image, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
 
         endPoints = getBoxPoints(image);
         Imgproc.cvtColor(image, image, Imgproc.COLOR_GRAY2BGR);
-        Imgproc.rectangle(image, endPoints[0], endPoints[1], new Scalar(0, 0, 255));
+        Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.RED);
+        Imgproc.circle(image, targetCenter, 3, Constants.RED, -1);
         
-        Imgproc.drawContours(image, contours, -1, new Scalar(0, 255, 0), -1);
+        Imgproc.drawContours(image, contours, -1, Constants.WHITE, -1);
 
         return image;
     }
@@ -75,9 +84,18 @@ public class Vision extends SubsystemBase
     {
         Rect rectangle = Imgproc.boundingRect(image);
         Point [] endPoints = new Point[2];
+        double [] rectangleCenter = {0, 0};
 
         endPoints[0] = rectangle.tl();
         endPoints[1] = rectangle.br();
+
+        height = rectangle.height;
+        width = rectangle.width;
+
+        rectangleCenter[0] = endPoints[1].x - (width / 2);
+        rectangleCenter[1] = endPoints[1].y - (height / 2);
+
+        targetCenter.set(rectangleCenter);
 
         return endPoints;
     }

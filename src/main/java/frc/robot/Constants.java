@@ -1,5 +1,7 @@
 package frc.robot;
 
+import org.opencv.core.Scalar;
+
 public final class Constants
 {
     // HARDWARE PORTS
@@ -49,4 +51,10 @@ public final class Constants
     public static final double SHOOTER_SPEED = 0.55;
     public static final double MAX_THROTTLE_SPEED = 0.75;
     public static final double MAX_STEER_SPEED = 0.75;
+
+    // COLOURS
+    public static final Scalar GREEN = new Scalar(0, 255, 0);
+    public static final Scalar RED = new Scalar(0, 0, 255);
+    public static final Scalar WHITE = new Scalar(255, 255, 255);
+    public static final Scalar VISION_THRESHOLD = new Scalar(40, 0, 175);
 }
