@@ -72,10 +72,9 @@ public class Vision extends SubsystemBase
 
         endPoints = getBoxPoints(image);
         Imgproc.cvtColor(image, image, Imgproc.COLOR_GRAY2BGR);
-        Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.RED);
-        Imgproc.circle(image, targetCenter, 3, Constants.RED, -1);
-        
+
         Imgproc.drawContours(image, contours, -1, Constants.WHITE, -1);
+        drawTargetBox(image, endPoints);
 
         return image;
     }
@@ -98,6 +97,20 @@ public class Vision extends SubsystemBase
         targetCenter.set(rectangleCenter);
 
         return endPoints;
+    }
+
+    private void drawTargetBox(Mat image, Point [] endPoints)
+    {
+        if (((image.width() / 2) - 5) < targetCenter.x && targetCenter.x < ((image.width() / 2) + 5))
+        {
+            Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.GREEN);
+            Imgproc.circle(image, targetCenter, 3, Constants.GREEN, -1);
+        }
+        else
+        {
+            Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.RED);
+            Imgproc.circle(image, targetCenter, 3, Constants.RED, -1);
+        }
     }
 
     public void start()
