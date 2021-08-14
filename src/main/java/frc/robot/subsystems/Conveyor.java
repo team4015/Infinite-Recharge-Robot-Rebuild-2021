@@ -26,27 +26,23 @@ public class Conveyor extends SubsystemBase
 
   public void standby()
   {
-    if (!shooterSwitch.get())
+    if (!shooterSwitch.get() && intakeSwitch.get())
     {
-      if (intakeSwitch.get() && !Driver.getThrottleButton(Constants.REVERSE_CONVEYOR) && Driver.getSteerButton(Constants.SPIN_INTAKE))
-      {
-        feed();
-        timer.reset();
-        timer.start();
-        while (!conveyorSwitch.get() && timer.get() < 2);
-        timer.reset();
-        timer.start();
-        while (conveyorSwitch.get() && timer.get() < 2);
-        timer.stop();
-      }
+      feed();
+      timer.reset();
+      timer.start();
+      while (!conveyorSwitch.get() && timer.get() < 2);
+      timer.reset();
+      timer.start();
+      while (conveyorSwitch.get() && timer.get() < 2);
+      timer.stop();
+      stop();
     }
-
-    stop();
   }
 
   public void feed()
   {
-    if (!shooterSwitch.get() || Driver.getSteerButton(Constants.CHARGE_SHOOTER))
+    if (!shooterSwitch.get())
     {
       conveyorMotor.set(0.75);
     }

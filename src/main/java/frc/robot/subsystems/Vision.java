@@ -2,11 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Solenoid;
-import frc.robot.subsystems.Drivetrain;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.Constants;
-import frc.robot.commands.AimBot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -24,17 +20,15 @@ public class Vision extends SubsystemBase
     private Solenoid ringlight;
     private Thread cameraFeed;
     private boolean runFeed;
-    private static boolean horizontallyAligned;
+    private boolean horizontallyAligned;
     private double height;
     private double width;
     private Point targetCenter;
     private Point reticule;
-    private Drivetrain drivetrain;
 
-    public Vision(Drivetrain drivetrain)
+    public Vision()
     {
         ringlight = new Solenoid(Constants.RING_LIGHT);
-        this.drivetrain = drivetrain;
         horizontallyAligned = false;
         cameraFeed = new Thread(() -> getCameraFeed());
         cameraFeed.start();
@@ -145,7 +139,7 @@ public class Vision extends SubsystemBase
         runFeed = false;
     }
 
-    public static boolean getHorizontallyAligned()
+    public boolean getHorizontallyAligned()
     {
         return horizontallyAligned;
     }

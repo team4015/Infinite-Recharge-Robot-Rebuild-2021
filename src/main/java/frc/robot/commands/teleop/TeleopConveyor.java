@@ -1,44 +1,46 @@
 package frc.robot.commands.teleop;
 
-import frc.robot.subsystems.Conveyor;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.controls.Driver;
 import frc.robot.Robot;
 
 public class TeleopConveyor extends CommandBase
 {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Conveyor conveyor;
+  private Robot robot;
 
   public TeleopConveyor(Robot robot)
   {
-    conveyor = robot.conveyor;
-    addRequirements(conveyor);
+    this.robot = robot;
+    addRequirements(robot.conveyor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize()
   {
-    conveyor.stop();
+    robot.conveyor.stop();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
   {
-    if (Driver.getThrottleButton(Constants.FEED_CONVEYOR))
+    if (robot.driver.getThrottleButton(Constants.FEED_CONVEYOR) || robot.driver.getSteerButton(Constants.CHARGE_SHOOTER))
     {
-        conveyor.feed();
+      robot.conveyor.feed();
     }
-    else if (Driver.getThrottleButton(Constants.REVERSE_CONVEYOR))
+    else if (robot.driver.getThrottleButton(Constants.REVERSE_CONVEYOR))
     {
-        conveyor.reverse();
+      robot.conveyor.reverse();
+    }
+    else if ((!robot.driver.getThrottleButton(Constants.REVERSE_CONVEYOR) && robot.driver.getSteerButton(Constants.SPIN_INTAKE)) || robot.driver.getSteerButton(Constants.CHARGE_SHOOTER))
+    {
+      robot.conveyor.standby();
     }
     else
     {
-        conveyor.standby();
+      robot.conveyor.stop();
     }
   }
 
@@ -46,7 +48,7 @@ public class TeleopConveyor extends CommandBase
   @Override
   public void end(boolean interrupted)
   {
-    conveyor.stop();
+    robot.conveyor.stop();
   }
 
   // Returns true when the command should end.

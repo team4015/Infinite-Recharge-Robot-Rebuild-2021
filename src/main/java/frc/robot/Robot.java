@@ -6,12 +6,15 @@ import edu.wpi.first.wpilibj.Compressor;
 
 public class Robot
 {
+  // SUBSYSTEMS
   public Drivetrain drivetrain;
   public Intake intake;
   public Compressor compressor;
   public Conveyor conveyor;
   public Shooter shooter;
   public Vision vision;
+
+  // CONTROLS
   public Driver driver;
 
   public Robot()
@@ -21,8 +24,9 @@ public class Robot
     compressor = new Compressor();
     conveyor = new Conveyor();
     shooter = new Shooter();
-    vision = new Vision(drivetrain);
-    driver = new Driver(drivetrain);
+    vision = new Vision();
+
+    driver = new Driver(this);
 
     init();
   }

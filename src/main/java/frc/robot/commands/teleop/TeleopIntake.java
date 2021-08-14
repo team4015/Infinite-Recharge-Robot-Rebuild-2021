@@ -1,53 +1,51 @@
 package frc.robot.commands.teleop;
 
-import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.controls.Driver;
 import frc.robot.Robot;
 
 public class TeleopIntake extends CommandBase
 {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Intake intake;
+  private Robot robot;
 
   public TeleopIntake(Robot robot)
   {
-    intake = robot.intake;
-    addRequirements(intake);
+    this.robot = robot;
+    addRequirements(robot.intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize()
   {
-    intake.stop();
+    robot.intake.stop();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
   {
-    if (Driver.getSteerButton(Constants.SPIN_INTAKE))
+    if (robot.driver.getSteerButton(Constants.SPIN_INTAKE))
     {
-      intake.spin();
+      robot.intake.spin();
     }
-    else if (Driver.getSteerButton(Constants.REVERSE_INTAKE) || Driver.getThrottleButton(Constants.REVERSE_CONVEYOR))
+    else if (robot.driver.getSteerButton(Constants.REVERSE_INTAKE) || robot.driver.getThrottleButton(Constants.REVERSE_CONVEYOR))
     {
-      intake.reverse();
+      robot.intake.reverse();
     }
     else
     {
-      intake.stop();
+      robot.intake.stop();
     }
 
-    if (Driver.getSteerButton(Constants.DEPLOY_INTAKE))
+    if (robot.driver.getSteerButton(Constants.DEPLOY_INTAKE))
     {
-      intake.deploy();
+      robot.intake.deploy();
     }
-    else if (Driver.getSteerButton(Constants.RETRACT_INTAKE))
+    else if (robot.driver.getSteerButton(Constants.RETRACT_INTAKE))
     {
-      intake.retract();
+      robot.intake.retract();
     }
   }
 
@@ -55,7 +53,7 @@ public class TeleopIntake extends CommandBase
   @Override
   public void end(boolean interrupted)
   {
-    intake.stop();
+    robot.intake.stop();
   }
 
   // Returns true when the command should end.

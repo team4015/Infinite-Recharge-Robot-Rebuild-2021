@@ -4,23 +4,26 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 import frc.robot.commands.AimBot;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.Robot;
 
 import java.lang.Math;
 
 public class Driver
 {
-    public static Joystick throttle = new Joystick(Constants.THROTTLE_JOYSTICK);
-    public static Joystick steer = new Joystick(Constants.STEER_JOYSTICK);
-    private static Drivetrain drivetrain;
-    private static boolean on = false;
+    private Joystick throttle;
+    private Joystick steer;
+    private Robot robot;
+    private boolean visionEnabled;
 
-    public Driver(Drivetrain drivetrain)
+    public Driver(Robot robot)
     {
-        this.drivetrain = drivetrain;
+        this.robot = robot;
+        throttle = new Joystick(Constants.THROTTLE_JOYSTICK);
+        steer = new Joystick(Constants.STEER_JOYSTICK);
+        visionEnabled = false;
     }
 
-    public static double getThrottle()
+    public double getThrottle()
     {
         double throttleValue = 0;
         
@@ -34,7 +37,7 @@ public class Driver
         return throttleValue;
     }
 
-    public static double getSteer()
+    public double getSteer()
     {
         double steerValue = 0;
 
@@ -48,32 +51,31 @@ public class Driver
         return steerValue;
     }
 
-    public static boolean getThrottleButton(int button)
+    public boolean getThrottleButton(int button)
     {
         return throttle.getRawButton(button);
     }
 
-    public static boolean getSteerButton(int button)
+    public boolean getSteerButton(int button)
     {
         return steer.getRawButton(button);
     }
 
-    public static boolean getSteerButtonPressed(int button)
+    public boolean getSteerButtonPressed(int button)
     {
         return steer.getRawButtonPressed(button);
     }
 
-    public static void toggleAimBot()
+    public void toggleAimBot()
     {
         if (steer.getRawButtonPressed(Constants.TOGGLE_VISION))
         {
-            on = !on;
+            visionEnabled = !visionEnabled;
         }
 
-        if (on)
+        if (visionEnabled)
         {
-            
-            CommandScheduler.getInstance().schedule(new AimBot(drivetrain));
+            CommandScheduler.getInstance().schedule(new AimBot(robot));
         }
     }
 }
