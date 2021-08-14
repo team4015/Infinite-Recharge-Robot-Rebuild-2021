@@ -26,17 +26,17 @@ public class TeleopConveyor extends CommandBase
   @Override
   public void execute()
   {
-    if (robot.driver.getThrottleButton(Constants.FEED_CONVEYOR) || robot.driver.getSteerButton(Constants.CHARGE_SHOOTER))
+    if (robot.driver.getThrottleButton(Constants.FEED_CONVEYOR))
     {
-      robot.conveyor.feed();
+      robot.conveyor.feed(robot.driver.getSteerButton(Constants.CHARGE_SHOOTER));
     }
     else if (robot.driver.getThrottleButton(Constants.REVERSE_CONVEYOR))
     {
       robot.conveyor.reverse();
     }
-    else if ((!robot.driver.getThrottleButton(Constants.REVERSE_CONVEYOR) && robot.driver.getSteerButton(Constants.SPIN_INTAKE)) || robot.driver.getSteerButton(Constants.CHARGE_SHOOTER))
+    else if (robot.driver.getSteerButton(Constants.SPIN_INTAKE))
     {
-      robot.conveyor.standby();
+      robot.conveyor.standby(robot.driver.getSteerButton(Constants.CHARGE_SHOOTER));
     }
     else
     {

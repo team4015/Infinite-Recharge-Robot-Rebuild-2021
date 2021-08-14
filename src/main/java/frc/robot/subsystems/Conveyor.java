@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-import frc.robot.controls.Driver;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -24,31 +23,46 @@ public class Conveyor extends SubsystemBase
     shooterSwitch = new DigitalInput(Constants.SHOOTER_SWITCH);
   }
 
-  public void standby()
+  public boolean getIntakeSwitch()
   {
+    return intakeSwitch.get();
+  }
+
+  public boolean getConveyorSwitch()
+  {
+    return conveyorSwitch.get();
+  }
+
+  public boolean getShooterSwitch()
+  {
+    return shooterSwitch.get();
+  }
+
+  public void standby(boolean shooterRunning)
+  { 
     if (!shooterSwitch.get() && intakeSwitch.get())
     {
-      feed();
+      feed(shooterRunning);
       timer.reset();
       timer.start();
-      while (!conveyorSwitch.get() && timer.get() < 2);
+      while (!conveyorSwitch.get() && timer.get() < Constants.CONVEYOR_TIMEOUT);
       timer.reset();
       timer.start();
-      while (conveyorSwitch.get() && timer.get() < 2);
+      while (conveyorSwitch.get() && timer.get() < Constants.CONVEYOR_TIMEOUT);
       timer.stop();
       stop();
     }
   }
 
-  public void feed()
+  public void feed(boolean shooterRunning)
   {
-    if (!shooterSwitch.get())
+    if (!shooterSwitch.get() || shooterRunning)
     {
       conveyorMotor.set(0.75);
     }
     else
     {
-      conveyorMotor.set(0);
+      stop();
     }
   }
 
