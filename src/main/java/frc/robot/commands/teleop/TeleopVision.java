@@ -29,7 +29,7 @@ public class TeleopVision extends CommandBase
   @Override
   public void execute()
   {
-    if (Driver.getSteerButtonPressed(Constants.TOGGLE_RINGLIGHT))
+    if (Driver.getSteerButtonPressed(Constants.TOGGLE_VISION))
     {
       on = !on;
     }

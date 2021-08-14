@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.teleop.*;
+import frc.robot.controls.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -36,6 +37,8 @@ public class Match extends TimedRobot
   {
     // Runs the Scheduler.
     CommandScheduler.getInstance().run();
+
+    Driver.toggleAimBot();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -70,9 +73,8 @@ public class Match extends TimedRobot
 
     if (teleop != null)
     {
-        teleop.schedule();
+      teleop.schedule();
     }
-
   }
 
   /** This function is called periodically during operator control. */
@@ -83,7 +85,8 @@ public class Match extends TimedRobot
   }
 
   @Override
-  public void testInit() {
+  public void testInit()
+  {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
   }

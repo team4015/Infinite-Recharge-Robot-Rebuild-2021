@@ -2,7 +2,11 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Solenoid;
+import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.Constants;
+import frc.robot.commands.AimBot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -20,19 +24,25 @@ public class Vision extends SubsystemBase
     private Solenoid ringlight;
     private Thread cameraFeed;
     private boolean runFeed;
+    private static boolean horizontallyAligned;
     private double height;
     private double width;
     private Point targetCenter;
+    private Point reticule;
+    private Drivetrain drivetrain;
 
-    public Vision()
+    public Vision(Drivetrain drivetrain)
     {
         ringlight = new Solenoid(Constants.RING_LIGHT);
+        this.drivetrain = drivetrain;
+        horizontallyAligned = false;
         cameraFeed = new Thread(() -> getCameraFeed());
         cameraFeed.start();
 
         height = 0;
         width = 0;
         targetCenter = new Point();
+        reticule = new Point();
     }
 
     private void getCameraFeed()
@@ -43,7 +53,7 @@ public class Vision extends SubsystemBase
         CvSource videoOutput = CameraServer.getInstance().putVideo("Processed", 640, 480);
 
         Mat unprocessedPixels = new Mat();
-        
+
         while (true)
         {
             if (videoInput.grabFrame(unprocessedPixels) == 0)
@@ -73,8 +83,7 @@ public class Vision extends SubsystemBase
         endPoints = getBoxPoints(image);
         Imgproc.cvtColor(image, image, Imgproc.COLOR_GRAY2BGR);
 
-        Imgproc.drawContours(image, contours, -1, Constants.WHITE, -1);
-        drawTargetBox(image, endPoints);
+        drawTargetBox(image, endPoints, contours);
 
         return image;
     }
@@ -83,7 +92,7 @@ public class Vision extends SubsystemBase
     {
         Rect rectangle = Imgproc.boundingRect(image);
         Point [] endPoints = new Point[2];
-        double [] rectangleCenter = {0, 0};
+        double [] centerPoints = {0, 0};
 
         endPoints[0] = rectangle.tl();
         endPoints[1] = rectangle.br();
@@ -91,25 +100,36 @@ public class Vision extends SubsystemBase
         height = rectangle.height;
         width = rectangle.width;
 
-        rectangleCenter[0] = endPoints[1].x - (width / 2);
-        rectangleCenter[1] = endPoints[1].y - (height / 2);
+        centerPoints[0] = endPoints[1].x - (width / 2);
+        centerPoints[1] = endPoints[1].y - (height / 2);
 
-        targetCenter.set(rectangleCenter);
+        targetCenter.set(centerPoints); // Set rectangle center
+
+        centerPoints[0] = image.width() / 2;
+        centerPoints[1] = image.height() / 2;
+
+        reticule.set(centerPoints); // Set reticule point
 
         return endPoints;
     }
 
-    private void drawTargetBox(Mat image, Point [] endPoints)
+    private void drawTargetBox(Mat image, Point [] endPoints, List<MatOfPoint> contours)
     {
         if (((image.width() / 2) - 5) < targetCenter.x && targetCenter.x < ((image.width() / 2) + 5))
         {
+            horizontallyAligned = true;
+            
             Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.GREEN);
-            Imgproc.circle(image, targetCenter, 3, Constants.GREEN, -1);
+            Imgproc.circle(image, reticule, 3, Constants.GREEN, -1);
+            Imgproc.drawContours(image, contours, -1, Constants.GREEN, -1);
         }
         else
         {
+            horizontallyAligned = false;
+
             Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.RED);
-            Imgproc.circle(image, targetCenter, 3, Constants.RED, -1);
+            Imgproc.circle(image, reticule, 3, Constants.RED, -1);
+            Imgproc.drawContours(image, contours, -1, Constants.WHITE, -1);
         }
     }
 
@@ -123,5 +143,10 @@ public class Vision extends SubsystemBase
     {
         ringlight.set(false);
         runFeed = false;
+    }
+
+    public static boolean getHorizontallyAligned()
+    {
+        return horizontallyAligned;
     }
 }

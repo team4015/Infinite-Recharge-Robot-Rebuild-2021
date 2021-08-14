@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.subsystems.*;
+import frc.robot.controls.Driver;
 import edu.wpi.first.wpilibj.Compressor;
 
 public class Robot
@@ -11,6 +12,7 @@ public class Robot
   public Conveyor conveyor;
   public Shooter shooter;
   public Vision vision;
+  public Driver driver;
 
   public Robot()
   {
@@ -19,7 +21,8 @@ public class Robot
     compressor = new Compressor();
     conveyor = new Conveyor();
     shooter = new Shooter();
-    vision = new Vision();
+    vision = new Vision(drivetrain);
+    driver = new Driver(drivetrain);
 
     init();
   }

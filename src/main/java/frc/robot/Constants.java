@@ -28,7 +28,7 @@ public final class Constants
     public static final int REVERSE_CONVEYOR = 3;
     public static final int CHARGE_SHOOTER = 2;
 
-    public static final int TOGGLE_RINGLIGHT = 5;
+    public static final int TOGGLE_VISION = 5;
 
     // PISTONS
     public static final int SHOOTER_PISTON_DEPLOY = 2;
@@ -49,8 +49,8 @@ public final class Constants
     // SETTINGS
     public static final double DEADZONE = 0.15;
     public static final double SHOOTER_SPEED = 0.55;
-    public static final double MAX_THROTTLE_SPEED = 0.75;
-    public static final double MAX_STEER_SPEED = 0.75;
+    public static final double MAX_THROTTLE_SPEED = 0.30;
+    public static final double MAX_STEER_SPEED = 0.3;
 
     // COLOURS
     public static final Scalar GREEN = new Scalar(0, 255, 0);
