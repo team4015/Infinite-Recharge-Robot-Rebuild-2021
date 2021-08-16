@@ -50,10 +50,10 @@ public class Robot
 
   private void setDefaultCommands()
   {
-    // drivetrain.setDefaultCommand(new Drive(this));
+    drivetrain.setDefaultCommand(new Drive(this));
     intake.setDefaultCommand(new IntakeStop(this));
-    // conveyor.setDefaultCommand(new ConveyorStandby(this));
-    // shooter.setDefaultCommand(new ShooterStop(this));
-    // vision.setDefaultCommand(new VisionStop(this));
+    conveyor.setDefaultCommand(new ConveyorStandby(this));
+    shooter.setDefaultCommand(new ShooterStop(this));
+    vision.setDefaultCommand(new VisionStop(this));
   }
 }

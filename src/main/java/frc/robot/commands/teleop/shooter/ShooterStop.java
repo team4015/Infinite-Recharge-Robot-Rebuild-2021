@@ -19,7 +19,7 @@ public class ShooterStop extends CommandBase
   @Override
   public void initialize()
   {
-    robot.shooter.stop();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -33,7 +33,7 @@ public class ShooterStop extends CommandBase
   @Override
   public void end(boolean interrupted)
   {
-    robot.shooter.stop();
+
   }
 
   // Returns true when the command should end.

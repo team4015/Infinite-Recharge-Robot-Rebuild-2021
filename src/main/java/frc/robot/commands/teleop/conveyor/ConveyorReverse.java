@@ -11,7 +11,7 @@ public class ConveyorReverse extends CommandBase
   public ConveyorReverse(Robot robot)
   {
     this.robot = robot;
-    addRequirements(robot.conveyor);
+    addRequirements(robot.conveyor, robot.intake);
   }
 
   // Called when the command is initially scheduled.
@@ -26,6 +26,7 @@ public class ConveyorReverse extends CommandBase
   public void execute()
   {
       robot.conveyor.reverse();
+      robot.intake.reverse();
   }
 
   // Called once the command ends or is interrupted.

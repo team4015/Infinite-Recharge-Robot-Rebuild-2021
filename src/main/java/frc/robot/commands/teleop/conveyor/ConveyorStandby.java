@@ -19,7 +19,7 @@ public class ConveyorStandby extends CommandBase
   @Override
   public void initialize()
   {
-    robot.conveyor.stop();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -33,7 +33,7 @@ public class ConveyorStandby extends CommandBase
   @Override
   public void end(boolean interrupted)
   {
-    robot.conveyor.stop();
+
   }
 
   // Returns true when the command should end.

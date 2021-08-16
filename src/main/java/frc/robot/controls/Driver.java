@@ -52,11 +52,11 @@ public class Driver
         intakeReverse.whileHeld(new IntakeReverse(robot));
         intakeDeploy.whenPressed(new IntakeDeploy(robot));
         intakeRetract.whenPressed(new IntakeRetract(robot));
-        // conveyorFeed.whileHeld(new ConveyorFeed(robot));
-        // conveyorReverse.whileHeld(new ConveyorReverse(robot));
-        // shooterSpin.whileHeld(new ShooterSpin(robot));
-        // visionStart.whenPressed(new VisionStart(robot));
-        // visionStop.whenReleased(new VisionStop(robot));
+        conveyorFeed.whileHeld(new ConveyorFeed(robot));
+        conveyorReverse.whileHeld(new ConveyorReverse(robot));
+        shooterSpin.whileHeld(new ShooterSpin(robot));
+        visionStart.whenPressed(new VisionStart(robot));
+        visionStop.whenReleased(new VisionStop(robot));
     }
 
     public double getThrottle()
