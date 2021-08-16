@@ -2,7 +2,6 @@ package frc.robot.controls;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 import frc.robot.commands.AimBot;
@@ -19,7 +18,6 @@ public class Driver
     private Joystick throttle;
     private Joystick steer;
     private Robot robot;
-    private Command aimBot;
 
     private JoystickButton intakeSpin;
     private JoystickButton intakeReverse;
@@ -28,8 +26,7 @@ public class Driver
     private JoystickButton conveyorFeed;
     private JoystickButton conveyorReverse;
     private JoystickButton shooterSpin;
-    private JoystickButton visionStart;
-    private JoystickButton visionStop;
+    private JoystickButton visionRun;
 
     public Driver(Robot robot)
     {
@@ -45,8 +42,7 @@ public class Driver
         conveyorFeed = new JoystickButton(throttle, Constants.FEED_CONVEYOR);
         conveyorReverse = new JoystickButton(throttle, Constants.REVERSE_CONVEYOR);
         shooterSpin = new JoystickButton(steer, Constants.CHARGE_SHOOTER);
-        visionStart = new JoystickButton(steer, Constants.TOGGLE_VISION);
-        visionStop = new JoystickButton(steer, Constants.TOGGLE_VISION);
+        visionRun = new JoystickButton(steer, Constants.TOGGLE_VISION);
 
         intakeSpin.whileHeld(new IntakeSpin(robot));
         intakeReverse.whileHeld(new IntakeReverse(robot));
@@ -55,8 +51,7 @@ public class Driver
         conveyorFeed.whileHeld(new ConveyorFeed(robot));
         conveyorReverse.whileHeld(new ConveyorReverse(robot));
         shooterSpin.whileHeld(new ShooterSpin(robot));
-        visionStart.toggleWhenPressed(new VisionStart(robot));
-        // visionStop.whenReleased(new VisionStop(robot));
+        visionRun.toggleWhenPressed(new VisionRun(robot));
     }
 
     public double getThrottle()
@@ -104,18 +99,11 @@ public class Driver
 
     public void toggleAimBot()
     {   
-        // if (getSteerButton(7) && robot.vision.getVisionEnabled())
-        // {
-        //     aimBot = new AimBot(robot);
-
-        //     if (CommandScheduler.getInstance().isScheduled(aimBot))
-        //     {
-        //         return;
-        //     }
-
-        //     CommandScheduler.getInstance().schedule(aimBot);
-        // }
-        // else
+        if (getSteerButton(Constants.RUN_AIMBOT) && robot.vision.getVisionEnabled())
+        {
+            CommandScheduler.getInstance().schedule(new AimBot(robot));
+        }
+        else
         {
             return;
         }

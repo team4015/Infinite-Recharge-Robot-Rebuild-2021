@@ -7,7 +7,6 @@ import frc.robot.commands.teleop.drivetrain.*;
 import frc.robot.commands.teleop.intake.*;
 import frc.robot.commands.teleop.conveyor.*;
 import frc.robot.commands.teleop.shooter.*;
-import frc.robot.commands.teleop.vision.*;
 
 public class Robot
 {
@@ -45,7 +44,7 @@ public class Robot
     conveyor.stop();
     shooter.stop();
     compressor.setClosedLoopControl(false);
-    vision.stop(false);
+    vision.stop();
   }
 
   private void setDefaultCommands()
@@ -54,6 +53,5 @@ public class Robot
     intake.setDefaultCommand(new IntakeStop(this));
     conveyor.setDefaultCommand(new ConveyorStandby(this));
     shooter.setDefaultCommand(new ShooterStop(this));
-    // vision.setDefaultCommand(new VisionStop(this));
   }
 }

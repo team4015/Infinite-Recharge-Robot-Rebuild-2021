@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class AimBot extends CommandBase
@@ -21,7 +21,6 @@ public class AimBot extends CommandBase
     {
         robot.vision.start();
         robot.drivetrain.stop();
-        System.out.println("Aligning...");
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -42,15 +41,15 @@ public class AimBot extends CommandBase
     @Override
     public boolean isFinished()
     {
-        if (robot.vision.getHorizontallyAligned() || !robot.driver.getSteerButton(7))
+        if (robot.vision.getHorizontallyAligned() || !robot.driver.getSteerButton(Constants.RUN_AIMBOT))
         {
             robot.drivetrain.stop();
-            System.out.println("Done");
+            robot.vision.stop();
             return true;
         }
         else
         {
-            return false;
+            return true;
         }
     }
 }

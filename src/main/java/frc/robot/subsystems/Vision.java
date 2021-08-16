@@ -133,13 +133,9 @@ public class Vision extends SubsystemBase
         runFeed = true;
     }
 
-    public void stop(boolean interrupted)
+    public void stop()
     {
-        if (!interrupted)
-        {
-            ringlight.set(false);
-        }
-        
+        ringlight.set(false);
         runFeed = false;
     }
 
