@@ -24,7 +24,7 @@ public class Vision extends SubsystemBase
     private double height;
     private double width;
     private Point targetCenter;
-    private Point reticule;
+    private Point reticle;
 
     public Vision()
     {
@@ -36,7 +36,7 @@ public class Vision extends SubsystemBase
         height = 0;
         width = 0;
         targetCenter = new Point();
-        reticule = new Point();
+        reticle = new Point();
     }
 
     private void getCameraFeed()
@@ -102,7 +102,7 @@ public class Vision extends SubsystemBase
         centerPoints[0] = image.width() / 2;
         centerPoints[1] = image.height() / 2;
 
-        reticule.set(centerPoints); // Set reticule point
+        reticle.set(centerPoints); // Set reticle point
 
         return endPoints;
     }
@@ -114,7 +114,7 @@ public class Vision extends SubsystemBase
             horizontallyAligned = true;
             
             Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.GREEN);
-            Imgproc.circle(image, reticule, 3, Constants.GREEN, -1);
+            Imgproc.circle(image, reticle, 3, Constants.GREEN, -1);
             Imgproc.drawContours(image, contours, -1, Constants.GREEN, -1);
         }
         else
@@ -122,7 +122,7 @@ public class Vision extends SubsystemBase
             horizontallyAligned = false;
 
             Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.RED);
-            Imgproc.circle(image, reticule, 3, Constants.RED, -1);
+            Imgproc.circle(image, reticle, 3, Constants.RED, -1);
             Imgproc.drawContours(image, contours, -1, Constants.WHITE, -1);
         }
     }
@@ -133,10 +133,19 @@ public class Vision extends SubsystemBase
         runFeed = true;
     }
 
-    public void stop()
+    public void stop(boolean interrupted)
     {
-        ringlight.set(false);
+        if (!interrupted)
+        {
+            ringlight.set(false);
+        }
+        
         runFeed = false;
+    }
+
+    public boolean getVisionEnabled()
+    {
+        return runFeed;
     }
 
     public boolean getHorizontallyAligned()

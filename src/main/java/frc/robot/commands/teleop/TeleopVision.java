@@ -8,11 +8,12 @@ public class TeleopVision extends CommandBase
 {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private Robot robot;
-  private boolean on = false;
+  private boolean visionEnabled;
 
   public TeleopVision(Robot robot)
   {
     this.robot = robot;
+    visionEnabled = false;
     addRequirements(robot.vision);
   }
 
@@ -20,7 +21,7 @@ public class TeleopVision extends CommandBase
   @Override
   public void initialize()
   {
-    robot.vision.stop();
+    robot.vision.stop(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -29,16 +30,16 @@ public class TeleopVision extends CommandBase
   {
     if (robot.driver.getSteerButtonPressed(Constants.TOGGLE_VISION))
     {
-      on = !on;
+      visionEnabled = !visionEnabled;
     }
 
-    if (on)
+    if (visionEnabled)
     {
       robot.vision.start();
     }
     else
     {
-      robot.vision.stop();
+      robot.vision.stop(false);
     }
   }
 
@@ -46,7 +47,7 @@ public class TeleopVision extends CommandBase
   @Override
   public void end(boolean interrupted)
   {
-    robot.vision.stop();
+    robot.vision.stop(interrupted);
   }
 
   // Returns true when the command should end.

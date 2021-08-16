@@ -39,6 +39,6 @@ public class Robot
     conveyor.stop();
     shooter.stop();
     compressor.setClosedLoopControl(false);
-    vision.stop();
+    vision.stop(false);
   }
 }
