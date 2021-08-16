@@ -1,7 +1,6 @@
 package frc.robot.commands.teleop.vision;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class VisionStop extends CommandBase
@@ -21,7 +20,7 @@ public class VisionStop extends CommandBase
   @Override
   public void initialize()
   {
-    robot.vision.stop(false);
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,7 +34,7 @@ public class VisionStop extends CommandBase
   @Override
   public void end(boolean interrupted)
   {
-    robot.vision.stop(interrupted);
+
   }
 
   // Returns true when the command should end.

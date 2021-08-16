@@ -54,6 +54,6 @@ public class Robot
     intake.setDefaultCommand(new IntakeStop(this));
     conveyor.setDefaultCommand(new ConveyorStandby(this));
     shooter.setDefaultCommand(new ShooterStop(this));
-    vision.setDefaultCommand(new VisionStop(this));
+    // vision.setDefaultCommand(new VisionStop(this));
   }
 }

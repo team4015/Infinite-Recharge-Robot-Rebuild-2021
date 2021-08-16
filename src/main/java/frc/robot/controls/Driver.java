@@ -45,8 +45,8 @@ public class Driver
         conveyorFeed = new JoystickButton(throttle, Constants.FEED_CONVEYOR);
         conveyorReverse = new JoystickButton(throttle, Constants.REVERSE_CONVEYOR);
         shooterSpin = new JoystickButton(steer, Constants.CHARGE_SHOOTER);
-        visionStart = new JoystickButton(throttle, Constants.TOGGLE_VISION);
-        visionStop = new JoystickButton(throttle, Constants.TOGGLE_VISION);
+        visionStart = new JoystickButton(steer, Constants.TOGGLE_VISION);
+        visionStop = new JoystickButton(steer, Constants.TOGGLE_VISION);
 
         intakeSpin.whileHeld(new IntakeSpin(robot));
         intakeReverse.whileHeld(new IntakeReverse(robot));
@@ -55,8 +55,8 @@ public class Driver
         conveyorFeed.whileHeld(new ConveyorFeed(robot));
         conveyorReverse.whileHeld(new ConveyorReverse(robot));
         shooterSpin.whileHeld(new ShooterSpin(robot));
-        visionStart.whenPressed(new VisionStart(robot));
-        visionStop.whenReleased(new VisionStop(robot));
+        visionStart.toggleWhenPressed(new VisionStart(robot));
+        // visionStop.whenReleased(new VisionStop(robot));
     }
 
     public double getThrottle()
