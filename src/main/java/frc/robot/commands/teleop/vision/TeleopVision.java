@@ -1,46 +1,53 @@
-package frc.robot.commands.teleop;
+package frc.robot.commands.teleop.vision;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
-public class TeleopShooter extends CommandBase
+public class TeleopVision extends CommandBase
 {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private Robot robot;
+  private boolean visionEnabled;
 
-  public TeleopShooter(Robot robot)
+  public TeleopVision(Robot robot)
   {
     this.robot = robot;
-    addRequirements(robot.shooter);
+    visionEnabled = false;
+    addRequirements(robot.vision);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize()
   {
-    robot.shooter.stop();
+    robot.vision.stop(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
   {
-    if (robot.driver.getSteerButton(Constants.CHARGE_SHOOTER))
+    if (robot.driver.getSteerButtonPressed(Constants.TOGGLE_VISION))
     {
-      robot.shooter.spin();
+      visionEnabled = !visionEnabled;
+    }
+
+    if (visionEnabled)
+    {
+      robot.vision.start();
     }
     else
     {
-      robot.shooter.stop();
-    } 
+      robot.vision.stop(false);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted)
   {
-    robot.shooter.stop();
+    robot.vision.stop(interrupted);
   }
 
   // Returns true when the command should end.

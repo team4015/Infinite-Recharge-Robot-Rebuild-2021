@@ -1,51 +1,46 @@
-package frc.robot.commands.teleop;
+package frc.robot.commands.teleop.conveyor;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
-public class TeleopIntake extends CommandBase
+public class TeleopConveyor extends CommandBase
 {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private Robot robot;
 
-  public TeleopIntake(Robot robot)
+  public TeleopConveyor(Robot robot)
   {
     this.robot = robot;
-    addRequirements(robot.intake);
+    addRequirements(robot.conveyor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize()
   {
-    robot.intake.stop();
+    robot.conveyor.stop();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
   {
-    if (robot.driver.getSteerButton(Constants.SPIN_INTAKE))
+    if (robot.driver.getThrottleButton(Constants.FEED_CONVEYOR))
     {
-      robot.intake.spin();
+      robot.conveyor.feed(robot.driver.getSteerButton(Constants.CHARGE_SHOOTER));
     }
-    else if (robot.driver.getSteerButton(Constants.REVERSE_INTAKE) || robot.driver.getThrottleButton(Constants.REVERSE_CONVEYOR))
+    else if (robot.driver.getThrottleButton(Constants.REVERSE_CONVEYOR))
     {
-      robot.intake.reverse();
+      robot.conveyor.reverse();
+    }
+    else if (robot.driver.getSteerButton(Constants.SPIN_INTAKE))
+    {
+      robot.conveyor.standby(robot.driver.getSteerButton(Constants.CHARGE_SHOOTER));
     }
     else
     {
-      robot.intake.stop();
-    }
-
-    if (robot.driver.getSteerButton(Constants.DEPLOY_INTAKE))
-    {
-      robot.intake.deploy();
-    }
-    else if (robot.driver.getSteerButton(Constants.RETRACT_INTAKE))
-    {
-      robot.intake.retract();
+      robot.conveyor.stop();
     }
   }
 
@@ -53,7 +48,7 @@ public class TeleopIntake extends CommandBase
   @Override
   public void end(boolean interrupted)
   {
-    robot.intake.stop();
+    robot.conveyor.stop();
   }
 
   // Returns true when the command should end.

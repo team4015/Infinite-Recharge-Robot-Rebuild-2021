@@ -8,12 +8,10 @@ public class AimBot extends CommandBase
 {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private Robot robot;
-    private Command teleop;
 
-    public AimBot(Robot robot, Command teleop)
+    public AimBot(Robot robot)
     {
         this.robot = robot;
-        this.teleop = teleop;
         addRequirements(robot.drivetrain, robot.vision);
     }
 
@@ -48,7 +46,6 @@ public class AimBot extends CommandBase
         {
             robot.drivetrain.stop();
             System.out.println("Done");
-            teleop.schedule();
             return true;
         }
         else

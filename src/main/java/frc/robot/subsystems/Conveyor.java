@@ -50,8 +50,9 @@ public class Conveyor extends SubsystemBase
       timer.start();
       while (conveyorSwitch.get() && timer.get() < Constants.CONVEYOR_TIMEOUT);
       timer.stop();
-      stop();
     }
+
+    stop();
   }
 
   public void feed(boolean shooterRunning)
@@ -83,7 +84,8 @@ public class Conveyor extends SubsystemBase
   }
 
   @Override
-  public void simulationPeriodic() {
+  public void simulationPeriodic()
+  {
     // This method will be called once per scheduler run during simulation
   }
 }

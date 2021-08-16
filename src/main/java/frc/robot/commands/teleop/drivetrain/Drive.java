@@ -1,14 +1,14 @@
-package frc.robot.commands.teleop;
+package frc.robot.commands.teleop.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class TeleopDrivetrain extends CommandBase
+public class Drive extends CommandBase
 {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private Robot robot;
 
-  public TeleopDrivetrain(Robot robot)
+  public Drive(Robot robot)
   {
     this.robot = robot;
     addRequirements(robot.drivetrain);
