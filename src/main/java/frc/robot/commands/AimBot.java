@@ -20,21 +20,31 @@ public class AimBot extends CommandBase
     public void initialize()
     {
         robot.vision.start();
-        robot.drivetrain.stop();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute()
     {
-        
+        if (robot.vision.turnLeft())
+        {
+            robot.drivetrain.move(0, -0.125);
+        }
+        else if (robot.vision.turnRight())
+        {
+            robot.drivetrain.move(0, 0.125);
+        }
+        else if (!robot.vision.turnLeft() && !robot.vision.turnRight())
+        {
+            robot.drivetrain.stop();
+        }
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted)
     {
-        robot.drivetrain.stop();
+
     }
 
     // Returns true when the command should end.
@@ -47,9 +57,7 @@ public class AimBot extends CommandBase
             robot.vision.stop();
             return true;
         }
-        else
-        {
-            return true;
-        }
+
+        return false;
     }
 }

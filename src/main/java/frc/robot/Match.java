@@ -33,8 +33,6 @@ public class Match extends TimedRobot
   {
     // Runs the Scheduler.
     CommandScheduler.getInstance().run();
-
-    robot.driver.toggleAimBot();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

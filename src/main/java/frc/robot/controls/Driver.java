@@ -2,7 +2,6 @@ package frc.robot.controls;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 import frc.robot.commands.AimBot;
 import frc.robot.Robot;
@@ -17,7 +16,6 @@ public class Driver
 {
     private Joystick throttle;
     private Joystick steer;
-    private Robot robot;
 
     private JoystickButton intakeSpin;
     private JoystickButton intakeReverse;
@@ -27,10 +25,10 @@ public class Driver
     private JoystickButton conveyorReverse;
     private JoystickButton shooterSpin;
     private JoystickButton visionRun;
+    private JoystickButton aimBot;
 
     public Driver(Robot robot)
     {
-        this.robot = robot;
         throttle = new Joystick(Constants.THROTTLE_JOYSTICK);
         steer = new Joystick(Constants.STEER_JOYSTICK);
 
@@ -41,8 +39,9 @@ public class Driver
         intakeRetract = new JoystickButton(steer, Constants.RETRACT_INTAKE);
         conveyorFeed = new JoystickButton(throttle, Constants.FEED_CONVEYOR);
         conveyorReverse = new JoystickButton(throttle, Constants.REVERSE_CONVEYOR);
-        shooterSpin = new JoystickButton(steer, Constants.CHARGE_SHOOTER);
+        shooterSpin = new JoystickButton(throttle, Constants.CHARGE_SHOOTER);
         visionRun = new JoystickButton(steer, Constants.TOGGLE_VISION);
+        aimBot = new JoystickButton(steer, Constants.RUN_AIMBOT);
 
         intakeSpin.whileHeld(new IntakeSpin(robot));
         intakeReverse.whileHeld(new IntakeReverse(robot));
@@ -52,6 +51,7 @@ public class Driver
         conveyorReverse.whileHeld(new ConveyorReverse(robot));
         shooterSpin.whileHeld(new ShooterSpin(robot));
         visionRun.toggleWhenPressed(new VisionRun(robot));
+        aimBot.whenPressed(new AimBot(robot));
     }
 
     public double getThrottle()
@@ -95,17 +95,5 @@ public class Driver
     public boolean getSteerButtonPressed(int button)
     {
         return steer.getRawButtonPressed(button);
-    }
-
-    public void toggleAimBot()
-    {   
-        if (getSteerButton(Constants.RUN_AIMBOT) && robot.vision.getVisionEnabled())
-        {
-            CommandScheduler.getInstance().schedule(new AimBot(robot));
-        }
-        else
-        {
-            return;
-        }
     }
 }

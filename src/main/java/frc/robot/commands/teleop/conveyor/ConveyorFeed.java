@@ -26,7 +26,7 @@ public class ConveyorFeed extends CommandBase
   @Override
   public void execute()
   {
-    robot.conveyor.feed(robot.driver.getSteerButton(Constants.CHARGE_SHOOTER));
+    robot.conveyor.feed(robot.driver.getThrottleButton(Constants.CHARGE_SHOOTER));
   }
 
   // Called once the command ends or is interrupted.

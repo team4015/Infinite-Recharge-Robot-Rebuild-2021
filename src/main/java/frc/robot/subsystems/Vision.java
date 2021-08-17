@@ -25,6 +25,8 @@ public class Vision extends SubsystemBase
     private double width;
     private Point targetCenter;
     private Point reticle;
+    private boolean turnLeft;
+    private boolean turnRight;
 
     public Vision()
     {
@@ -37,6 +39,8 @@ public class Vision extends SubsystemBase
         width = 0;
         targetCenter = new Point();
         reticle = new Point();
+        turnLeft = false;
+        turnRight = false;
     }
 
     private void getCameraFeed()
@@ -109,17 +113,31 @@ public class Vision extends SubsystemBase
 
     private void drawTargetBox(Mat image, Point [] endPoints, List<MatOfPoint> contours)
     {
-        if (((image.width() / 2) - 5) < targetCenter.x && targetCenter.x < ((image.width() / 2) + 5))
+        if ((reticle.x - 5) < targetCenter.x && targetCenter.x < (reticle.x + 5))
         {
             horizontallyAligned = true;
+            turnRight = false;
+            turnLeft = false;
             
             Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.GREEN);
             Imgproc.circle(image, reticle, 3, Constants.GREEN, -1);
             Imgproc.drawContours(image, contours, -1, Constants.GREEN, -1);
         }
-        else
+        else if ((reticle.x - 5) < targetCenter.x)
         {
             horizontallyAligned = false;
+            turnRight = true;
+            turnLeft = false;
+
+            Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.RED);
+            Imgproc.circle(image, reticle, 3, Constants.RED, -1);
+            Imgproc.drawContours(image, contours, -1, Constants.WHITE, -1);
+        }
+        else if (targetCenter.x < (reticle.x + 5))
+        {
+            horizontallyAligned = false;
+            turnLeft = true;
+            turnRight = false;
 
             Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.RED);
             Imgproc.circle(image, reticle, 3, Constants.RED, -1);
@@ -147,5 +165,15 @@ public class Vision extends SubsystemBase
     public boolean getHorizontallyAligned()
     {
         return horizontallyAligned;
+    }
+
+    public boolean turnLeft()
+    {
+        return turnLeft;
+    }
+
+    public boolean turnRight()
+    {
+        return turnRight;
     }
 }
