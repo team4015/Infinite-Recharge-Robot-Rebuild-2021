@@ -25,20 +25,27 @@ public class VisionRun extends CommandBase
   @Override
   public void execute()
   {
-    robot.vision.start();
+    if (robot.vision.getVisionEnabled())
+    {
+      robot.vision.stop();
+    }
+    else
+    {
+      robot.vision.start();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted)
   {
-    robot.vision.stop();
+    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished()
   {
-    return false;
+    return true;
   }
 }

@@ -50,8 +50,8 @@ public class Driver
         conveyorFeed.whileHeld(new ConveyorFeed(robot));
         conveyorReverse.whileHeld(new ConveyorReverse(robot));
         shooterSpin.whileHeld(new ShooterSpin(robot));
-        visionRun.toggleWhenPressed(new VisionRun(robot));
-        aimBot.whenPressed(new AimBot(robot));
+        visionRun.whenPressed(new VisionRun(robot));
+        aimBot.whenHeld(new AimBot(robot));
     }
 
     public double getThrottle()

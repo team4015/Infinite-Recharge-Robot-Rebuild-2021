@@ -27,11 +27,12 @@ public class Vision extends SubsystemBase
     private Point reticle;
     private boolean turnLeft;
     private boolean turnRight;
+    private double targetDistance;
+    private double calculatedShooterSpeed;
 
     public Vision()
     {
         ringlight = new Solenoid(Constants.RING_LIGHT);
-        horizontallyAligned = false;
         cameraFeed = new Thread(() -> getCameraFeed());
         cameraFeed.start();
 
@@ -39,8 +40,11 @@ public class Vision extends SubsystemBase
         width = 0;
         targetCenter = new Point();
         reticle = new Point();
+        horizontallyAligned = false;
         turnLeft = false;
         turnRight = false;
+        targetDistance = 0;
+        calculatedShooterSpeed = 0;
     }
 
     private void getCameraFeed()
@@ -81,7 +85,7 @@ public class Vision extends SubsystemBase
         endPoints = getBoxPoints(image);
         Imgproc.cvtColor(image, image, Imgproc.COLOR_GRAY2BGR);
 
-        drawTargetBox(image, endPoints, contours);
+        aqquireTarget(image, endPoints, contours);
 
         return image;
     }
@@ -111,37 +115,48 @@ public class Vision extends SubsystemBase
         return endPoints;
     }
 
-    private void drawTargetBox(Mat image, Point [] endPoints, List<MatOfPoint> contours)
+    private void drawMisalignedMasking(Mat image, Point [] endPoints, List<MatOfPoint> contours)
     {
-        if ((reticle.x - 5) < targetCenter.x && targetCenter.x < (reticle.x + 5))
+        Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.RED);
+        Imgproc.circle(image, reticle, 3, Constants.RED, -1);
+        Imgproc.drawContours(image, contours, -1, Constants.WHITE, -1);
+    }
+
+    private void drawAlignedMasking(Mat image, Point [] endPoints, List<MatOfPoint> contours)
+    {
+        Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.GREEN);
+        Imgproc.circle(image, reticle, 3, Constants.GREEN, -1);
+        Imgproc.drawContours(image, contours, -1, Constants.GREEN, -1);
+    }
+
+    private void aqquireTarget(Mat image, Point [] endPoints, List<MatOfPoint> contours)
+    {
+        targetDistance = ((reticle.y - targetCenter.y) * -2) + 142; // Negative to counteract Mat pixel ordering (top to bottom), 162cm is when reticle is centered with targetCenter, 2 represents 2cm per pixel
+        calculatedShooterSpeed = (0.001 * targetDistance) + 0.533;
+        
+        if ((reticle.x - Constants.AIM_BOT_ACCURACY) < targetCenter.x && targetCenter.x < (reticle.x + Constants.AIM_BOT_ACCURACY))
         {
             horizontallyAligned = true;
             turnRight = false;
             turnLeft = false;
             
-            Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.GREEN);
-            Imgproc.circle(image, reticle, 3, Constants.GREEN, -1);
-            Imgproc.drawContours(image, contours, -1, Constants.GREEN, -1);
+            drawAlignedMasking(image, endPoints, contours);
         }
-        else if ((reticle.x - 5) < targetCenter.x)
+        else if ((reticle.x - Constants.AIM_BOT_ACCURACY) < targetCenter.x)
         {
             horizontallyAligned = false;
             turnRight = true;
             turnLeft = false;
 
-            Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.RED);
-            Imgproc.circle(image, reticle, 3, Constants.RED, -1);
-            Imgproc.drawContours(image, contours, -1, Constants.WHITE, -1);
+            drawMisalignedMasking(image, endPoints, contours);
         }
-        else if (targetCenter.x < (reticle.x + 5))
+        else if (targetCenter.x < (reticle.x + Constants.AIM_BOT_ACCURACY))
         {
             horizontallyAligned = false;
             turnLeft = true;
             turnRight = false;
 
-            Imgproc.rectangle(image, endPoints[0], endPoints[1], Constants.RED);
-            Imgproc.circle(image, reticle, 3, Constants.RED, -1);
-            Imgproc.drawContours(image, contours, -1, Constants.WHITE, -1);
+            drawMisalignedMasking(image, endPoints, contours);
         }
     }
 
@@ -175,5 +190,10 @@ public class Vision extends SubsystemBase
     public boolean turnRight()
     {
         return turnRight;
+    }
+
+    public double getShooterSpeed()
+    {
+        return calculatedShooterSpeed;
     }
 }

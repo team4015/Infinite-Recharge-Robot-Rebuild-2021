@@ -1,14 +1,13 @@
 package frc.robot.commands.teleop.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class ShooterSpin extends CommandBase
 {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private Robot robot;
-
+  
   public ShooterSpin(Robot robot)
   {
     this.robot = robot;

@@ -7,20 +7,33 @@ import edu.wpi.first.wpilibj.Victor;
 public class Shooter extends SubsystemBase
 {
   private Victor motor;
+  private double shooterSpeed;
 
   public Shooter()
   {
     motor = new Victor(Constants.SHOOTER_VICTOR);
+    shooterSpeed = 0;
   }
 
   public void spin()
   {
-    motor.set(-Constants.SHOOTER_SPEED);
+    System.out.println(shooterSpeed);
+    if (shooterSpeed > 1)
+    {
+      shooterSpeed = 1;
+    }
+
+    motor.set(-shooterSpeed);
   }
 
   public void stop()
   {
-      motor.set(0);
+    motor.set(0);
+  }
+
+  public void setShooterSpeed(double shooterSpeed)
+  {
+    this.shooterSpeed = shooterSpeed;
   }
 
   @Override

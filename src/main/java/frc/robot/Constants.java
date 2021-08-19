@@ -49,10 +49,11 @@ public final class Constants
 
     // SETTINGS
     public static final double DEADZONE = 0.15;
-    public static final double SHOOTER_SPEED = 0.6;
+    public static final double DEFAULT_SHOOTER_SPEED = 0.6;
     public static final double MAX_THROTTLE_SPEED = 0.30;
     public static final double MAX_STEER_SPEED = 0.2;
     public static final int CONVEYOR_TIMEOUT = 2;
+    public static final double AIM_BOT_ACCURACY = 5;
 
     // COLOURS
     public static final Scalar GREEN = new Scalar(0, 255, 0);
