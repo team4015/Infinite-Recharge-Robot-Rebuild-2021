@@ -1,7 +1,6 @@
 package frc.robot.commands.teleop.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class ShooterStop extends CommandBase
@@ -26,6 +25,7 @@ public class ShooterStop extends CommandBase
   @Override
   public void execute()
   {
+    // robot.shooter.setShooterSpeed(robot.driver.getSlider());
     robot.shooter.stop();
   }
 

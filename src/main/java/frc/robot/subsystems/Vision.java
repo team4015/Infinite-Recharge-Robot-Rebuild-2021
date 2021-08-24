@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import java.lang.Math;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.Constants;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -129,11 +130,12 @@ public class Vision extends SubsystemBase
         Imgproc.drawContours(image, contours, -1, Constants.GREEN, -1);
     }
 
-    private void aqquireTarget(Mat image, Point [] endPoints, List<MatOfPoint> contours)
-    {
-        targetDistance = ((reticle.y - targetCenter.y) * -2) + 142; // Negative to counteract Mat pixel ordering (top to bottom), 162cm is when reticle is centered with targetCenter, 2 represents 2cm per pixel
-        calculatedShooterSpeed = (0.001 * targetDistance) + 0.533;
-        
+    private void aqquireTarget(Mat image, Point [] endPoints, List<MatOfPoint> contours)    {
+
+        targetDistance = ((reticle.y - targetCenter.y) * -Constants.PIXEL_TO_METRES_RATIO) + Constants.TARGET_CENTER_DISTANCE; // Negative to counteract Mat pixel ordering (top to bottom), 162cm is when reticle is centered with targetCenter, 2 represents 2cm per pixel
+        calculatedShooterSpeed = (0.1633 * Math.pow(targetDistance, 3)) - (0.5561 * Math.pow(targetDistance, 2)) + (0.6154 * targetDistance) + 0.4097;
+
+
         if ((reticle.x - Constants.AIM_BOT_ACCURACY) < targetCenter.x && targetCenter.x < (reticle.x + Constants.AIM_BOT_ACCURACY))
         {
             horizontallyAligned = true;
@@ -195,5 +197,10 @@ public class Vision extends SubsystemBase
     public double getShooterSpeed()
     {
         return calculatedShooterSpeed;
+    }
+
+    public double getTargetDistance()
+    {
+        return targetDistance;
     }
 }

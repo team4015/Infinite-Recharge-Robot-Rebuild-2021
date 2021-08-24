@@ -25,6 +25,8 @@ public class AimBot extends CommandBase
     @Override
     public void execute()
     {
+        robot.shooter.setShooterSpeed(robot.vision.getShooterSpeed());
+        
         if (robot.vision.turnLeft())
         {
             robot.drivetrain.move(0, -0.11);
@@ -36,7 +38,6 @@ public class AimBot extends CommandBase
         else if (!robot.vision.turnLeft() && !robot.vision.turnRight())
         {
             robot.drivetrain.stop();
-            robot.shooter.setShooterSpeed(robot.vision.getShooterSpeed());
         }
     }
 

@@ -49,7 +49,7 @@ public final class Constants
 
     // SETTINGS
     public static final double DEADZONE = 0.15;
-    public static final double DEFAULT_SHOOTER_SPEED = 0.6;
+    public static final double DEFAULT_SHOOTER_SPEED = 0.71;
     public static final double MAX_THROTTLE_SPEED = 0.30;
     public static final double MAX_STEER_SPEED = 0.2;
     public static final int CONVEYOR_TIMEOUT = 2;
@@ -60,4 +60,11 @@ public final class Constants
     public static final Scalar RED = new Scalar(0, 0, 255);
     public static final Scalar WHITE = new Scalar(255, 255, 255);
     public static final Scalar VISION_THRESHOLD = new Scalar(40, 0, 175);
+
+    // PROJECTILE MOTION CONSTANTS
+    public static final double GRAVITATION_CONSTANT = -9.81;
+    public static final double TARGET_HEIGHT = -0.75;
+    public static final double SHOOTER_ANGLE = 1.22173;
+    public static final double PIXEL_TO_METRES_RATIO = 0.01615;
+    public static final double TARGET_CENTER_DISTANCE = 1.52;
 }

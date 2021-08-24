@@ -16,11 +16,15 @@ public class Shooter extends SubsystemBase
   }
 
   public void spin()
-  {
-    System.out.println(shooterSpeed);
+  {        
     if (shooterSpeed > 1)
     {
       shooterSpeed = 1;
+    }
+
+    if (shooterSpeed < 0)
+    {
+      shooterSpeed = 0;
     }
 
     motor.set(-shooterSpeed);
@@ -29,6 +33,11 @@ public class Shooter extends SubsystemBase
   public void stop()
   {
     motor.set(0);
+  }
+
+  public double getShooterSpeed()
+  {
+    return shooterSpeed;
   }
 
   public void setShooterSpeed(double shooterSpeed)

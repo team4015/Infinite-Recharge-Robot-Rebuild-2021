@@ -54,6 +54,11 @@ public class Driver
         aimBot.whenHeld(new AimBot(robot));
     }
 
+    public double getSlider()
+    {
+        return (-throttle.getThrottle() + 1) / 2;
+    }
+
     public double getThrottle()
     {
         double throttleValue = 0;
