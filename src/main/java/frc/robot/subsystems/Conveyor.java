@@ -1,9 +1,11 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-import frc.robot.controls.Driver;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.PWMSparkMax;
+
+import com.fasterxml.jackson.databind.deser.std.NumberDeserializers.DoubleDeserializer;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -24,35 +26,54 @@ public class Conveyor extends SubsystemBase
     shooterSwitch = new DigitalInput(Constants.SHOOTER_SWITCH);
   }
 
-  public void standby()
+  public boolean getIntakeSwitch()
   {
-    if (!shooterSwitch.get())
+    return intakeSwitch.get();
+  }
+
+  public boolean getConveyorSwitch()
+  {
+    return conveyorSwitch.get();
+  }
+
+  public boolean getShooterSwitch()
+  {
+    return shooterSwitch.get();
+  }
+
+  public void standby(boolean shooterRunning)
+  { 
+    if (!shooterSwitch.get() && intakeSwitch.get())
     {
-      if (intakeSwitch.get() && !Driver.getThrottleButton(Constants.REVERSE_CONVEYOR) && Driver.getSteerButton(Constants.SPIN_INTAKE))
-      {
-        feed();
-        timer.reset();
-        timer.start();
-        while (!conveyorSwitch.get() && timer.get() < 2);
-        timer.reset();
-        timer.start();
-        while (conveyorSwitch.get() && timer.get() < 2);
-        timer.stop();
-      }
+      feed(shooterRunning);
+
+      timer.reset();
+      timer.start();
+      while (!conveyorSwitch.get() && timer.get() < Constants.CONVEYOR_TIMEOUT);
+
+      timer.reset();
+      timer.start();
+      while (conveyorSwitch.get() && timer.get() < Constants.CONVEYOR_TIMEOUT);
+      
+      timer.stop();
     }
 
     stop();
   }
 
-  public void feed()
+  /* =====================================
+  feed() spins the conveyor forward to 
+  intake balls into the bay.
+  ===================================== */
+  public void feed(boolean shooterRunning)
   {
-    if (!shooterSwitch.get() || Driver.getSteerButton(Constants.CHARGE_SHOOTER))
+    if (!shooterSwitch.get() || shooterRunning)
     {
-      conveyorMotor.set(0.75);
+      conveyorMotor.set(Constants.CONVEYOR_SPEED);
     }
     else
     {
-      conveyorMotor.set(0);
+      stop();
     }
   }
 
@@ -63,17 +84,6 @@ public class Conveyor extends SubsystemBase
 
   public void reverse()
   {
-    conveyorMotor.set(-0.5);
-  }
-
-  @Override
-  public void periodic()
-  {
-    // This method will be called once per scheduler run
-  }
-
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
+    conveyorMotor.set(Constants.CONVEYOR_REVERSE_SPEED);
   }
 }

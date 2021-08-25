@@ -15,7 +15,7 @@ public class Intake extends SubsystemBase
 
   public Intake()
   {
-    intakeMotor = new CANSparkMax(Constants.INTAKE_CAN_SPARK, MotorType.kBrushless); // Motor is Brushless
+    intakeMotor = new CANSparkMax(Constants.INTAKE_CAN_SPARK, MotorType.kBrushless);   // Motor is brushless
     intakePiston = new DoubleSolenoid(Constants.INTAKE_PISTON_DEPLOY, Constants.INTAKE_PISTON_RETRACT);
     deployed = false;
   }
@@ -51,16 +51,5 @@ public class Intake extends SubsystemBase
     {
       intakeMotor.set(0.25);
     }
-  }
-
-  @Override
-  public void periodic()
-  {
-    // This method will be called once per scheduler run
-  }
-
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
   }
 }

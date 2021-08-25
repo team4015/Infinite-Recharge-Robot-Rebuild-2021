@@ -1,16 +1,25 @@
 package frc.robot;
 
 import frc.robot.subsystems.*;
+import frc.robot.controls.Driver;
 import edu.wpi.first.wpilibj.Compressor;
+import frc.robot.commands.teleop.drivetrain.*;
+import frc.robot.commands.teleop.intake.*;
+import frc.robot.commands.teleop.conveyor.*;
+import frc.robot.commands.teleop.shooter.*;
 
 public class Robot
 {
+  // SUBSYSTEMS
   public Drivetrain drivetrain;
   public Intake intake;
   public Compressor compressor;
   public Conveyor conveyor;
   public Shooter shooter;
-  public Ringlight ringlight;
+  public Vision vision;
+
+  // CONTROLS
+  public Driver driver;
 
   public Robot()
   {
@@ -19,8 +28,11 @@ public class Robot
     compressor = new Compressor();
     conveyor = new Conveyor();
     shooter = new Shooter();
-    ringlight = new Ringlight();
+    vision = new Vision();
 
+    driver = new Driver(this);
+
+    setDefaultCommands();
     init();
   }
 
@@ -32,6 +44,14 @@ public class Robot
     conveyor.stop();
     shooter.stop();
     compressor.setClosedLoopControl(false);
-    ringlight.off();
+    vision.stop();
+  }
+
+  private void setDefaultCommands()
+  {
+    drivetrain.setDefaultCommand(new Drive(this));
+    intake.setDefaultCommand(new IntakeStop(this));
+    conveyor.setDefaultCommand(new ConveyorStandby(this));
+    shooter.setDefaultCommand(new ShooterStop(this));
   }
 }

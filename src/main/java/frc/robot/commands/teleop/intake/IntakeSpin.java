@@ -1,54 +1,44 @@
-package frc.robot.commands.teleop;
+package frc.robot.commands.teleop.intake;
 
-import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.controls.Driver;
 import frc.robot.Robot;
 
-public class TeleopShooter extends CommandBase
+public class IntakeSpin extends CommandBase
 {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Shooter shooter;
+  private Robot robot;
 
-  public TeleopShooter(Robot robot)
+  public IntakeSpin(Robot robot)
   {
-    shooter = robot.shooter;
-    addRequirements(shooter);
+    this.robot = robot;
+    addRequirements(robot.intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize()
   {
-    shooter.stop();
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
   {
-    if (Driver.getSteerButton(Constants.CHARGE_SHOOTER))
-    {
-      shooter.spin();
-    }
-    else
-    {
-      shooter.stop();
-    } 
+    robot.intake.spin();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted)
   {
-    shooter.stop();
+    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished()
   {
-    return false;
+    return true;
   }
 }

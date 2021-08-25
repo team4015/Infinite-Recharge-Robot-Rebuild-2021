@@ -1,11 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
-import frc.robot.commands.teleop.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -15,18 +11,12 @@ import frc.robot.commands.teleop.*;
  */
 public class Match extends TimedRobot
 {
-  private Command m_autonomousCommand;
-  private Command teleop;
   private Robot robot;
-  private UsbCamera camera;
 
   @Override
   public void robotInit()
   {
     robot = new Robot();
-    teleop = new Teleop(robot);
-
-    camera = CameraServer.getInstance().startAutomaticCapture();
   }
 
   /**
@@ -45,39 +35,35 @@ public class Match extends TimedRobot
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit()
+  {
+
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic()
+  {
+
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
-  public void autonomousInit() {
-    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+  public void autonomousInit()
+  {
 
-    // // schedule the autonomous command (example)
-    // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.schedule();
-    //}
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic()
+  {
+
+  }
 
   @Override
   public void teleopInit()
   {
-    // if (m_autonomousCommand != null)
-    // {
-    //   m_autonomousCommand.cancel();
-    // }
-
-    if (teleop != null)
-    {
-        teleop.schedule();
-    }
-
+    
   }
 
   /** This function is called periodically during operator control. */
@@ -88,12 +74,16 @@ public class Match extends TimedRobot
   }
 
   @Override
-  public void testInit() {
+  public void testInit()
+  {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
   }
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic()
+  {
+    
+  }
 }

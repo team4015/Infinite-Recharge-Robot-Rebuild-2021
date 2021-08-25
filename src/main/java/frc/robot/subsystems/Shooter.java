@@ -7,30 +7,36 @@ import edu.wpi.first.wpilibj.Victor;
 public class Shooter extends SubsystemBase
 {
   private Victor motor;
+  private double speed;
 
   public Shooter()
   {
     motor = new Victor(Constants.SHOOTER_VICTOR);
+    speed = 0.6;
   }
 
   public void spin()
-  {
-    motor.set(-Constants.SHOOTER_SPEED);
+  {        
+    motor.set(-speed);
   }
 
   public void stop()
   {
-      motor.set(0);
+    motor.set(0);
   }
 
-  @Override
-  public void periodic()
+  public void setSpeed(double speed)
   {
-    // This method will be called once per scheduler run
-  }
+    this.speed = speed;
 
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
+    if (speed > 1)
+    {
+      speed = 1; // Prevents motor controllers from writing a value higher than 1 to the motors
+    }
+
+    if (speed < 0)
+    {
+      speed = 0; // Prevents shooter from spinning backwards
+    }
   }
 }

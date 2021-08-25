@@ -1,46 +1,46 @@
-package frc.robot.commands.teleop;
+package frc.robot.commands.teleop.shooter;
 
-import frc.robot.subsystems.Drivetrain;
+import javax.swing.plaf.synth.SynthTabbedPaneUI;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.controls.Driver;
 import frc.robot.Robot;
 
-public class TeleopDrivetrain extends CommandBase
+public class ShooterSpin extends CommandBase
 {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Drivetrain drivetrain;
-
-  public TeleopDrivetrain(Robot robot)
+  private Robot robot;
+  
+  public ShooterSpin(Robot robot)
   {
-    drivetrain = robot.drivetrain;
-    addRequirements(drivetrain);
+    this.robot = robot;
+    addRequirements(robot.shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize()
   {
-    drivetrain.stop();
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
   {
-    drivetrain.move(Driver.getThrottle(), Driver.getSteer());
+    robot.shooter.spin();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted)
   {
-    drivetrain.stop();
+    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished()
   {
-    return false;
+    return true;
   }
 }
