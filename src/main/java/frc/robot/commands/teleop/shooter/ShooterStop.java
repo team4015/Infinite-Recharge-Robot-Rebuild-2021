@@ -25,7 +25,6 @@ public class ShooterStop extends CommandBase
   @Override
   public void execute()
   {
-    // robot.shooter.setShooterSpeed(robot.driver.getSlider());
     robot.shooter.stop();
   }
 

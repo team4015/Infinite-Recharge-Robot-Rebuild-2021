@@ -27,7 +27,6 @@ public class ShooterSpin extends CommandBase
   @Override
   public void execute()
   {
-    // robot.shooter.setShooterSpeed(robot.driver.getSlider());
     robot.shooter.spin();
   }
 

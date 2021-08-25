@@ -14,22 +14,9 @@ public final class Constants
     public static final int CONVEYOR_SPARK = 9;
     public static final int SHOOTER_VICTOR = 2;
 
-    // JOYSTICK KEY MAPPING
+    // CONTROLLER PORTS
     public static final int THROTTLE_JOYSTICK = 0;
     public static final int STEER_JOYSTICK = 1;
-
-    public static final int START_COMPRESSOR = 7;
-    public static final int STOP_COMPRESSOR = 8;
-    public static final int DEPLOY_INTAKE = 6;
-    public static final int RETRACT_INTAKE = 4;
-    public static final int SPIN_INTAKE = 1;
-    public static final int REVERSE_INTAKE = 3;
-    public static final int FEED_CONVEYOR = 1;
-    public static final int REVERSE_CONVEYOR = 3;
-    public static final int CHARGE_SHOOTER = 5;
-
-    public static final int TOGGLE_VISION = 5;
-    public static final int RUN_AIMBOT = 2;
 
     // PISTONS
     public static final int SHOOTER_PISTON_DEPLOY = 2;
@@ -53,7 +40,10 @@ public final class Constants
     public static final double MAX_THROTTLE_SPEED = 0.30;
     public static final double MAX_STEER_SPEED = 0.2;
     public static final int CONVEYOR_TIMEOUT = 2;
-    public static final double AIM_BOT_ACCURACY = 5;
+    public static final double AUTO_LEFT_TURN_SPEED = -0.11;
+    public static final double AUTO_RIGHT_TURN_SPEED = 0.15;
+    public static final double CONVEYOR_SPEED = 0.75;
+    public static final double CONVEYOR_REVERSE_SPEED = -0.5;
 
     // COLOURS
     public static final Scalar GREEN = new Scalar(0, 255, 0);
@@ -61,10 +51,8 @@ public final class Constants
     public static final Scalar WHITE = new Scalar(255, 255, 255);
     public static final Scalar VISION_THRESHOLD = new Scalar(40, 0, 175);
 
-    // PROJECTILE MOTION CONSTANTS
-    public static final double GRAVITATION_CONSTANT = -9.81;
-    public static final double TARGET_HEIGHT = -0.75;
-    public static final double SHOOTER_ANGLE = 1.22173;
+    // TARGETING CONSTANTS
+    public static final double AIM_BOT_ACCURACY = 5;
     public static final double PIXEL_TO_METRES_RATIO = 0.01615;
     public static final double TARGET_CENTER_DISTANCE = 1.52;
 }

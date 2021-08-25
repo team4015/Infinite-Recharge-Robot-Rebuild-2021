@@ -18,10 +18,9 @@ import org.opencv.imgproc.Imgproc;
 
 public class Vision extends SubsystemBase
 {
-    private Solenoid ringlight;
+    private Solenoid ringlight; // Ringlight is connected to PCM using a solenoid channel
     private Thread cameraFeed;
     private boolean runFeed;
-    private boolean horizontallyAligned;
     private double height;
     private double width;
     private Point targetCenter;
@@ -41,11 +40,22 @@ public class Vision extends SubsystemBase
         width = 0;
         targetCenter = new Point();
         reticle = new Point();
-        horizontallyAligned = false;
         turnLeft = false;
         turnRight = false;
         targetDistance = 0;
         calculatedShooterSpeed = 0;
+    }
+
+    public void toggleVision()
+    {
+        if (isEnabled())
+        {
+            stop();
+        }
+        else
+        {
+            start();
+        }
     }
 
     private void getCameraFeed()
@@ -72,33 +82,33 @@ public class Vision extends SubsystemBase
     {
         if (!runFeed)
         {
-            return image;
+            return image; // If ringlight is not on, unaltered frames will be sent back to driver station
         }
 
         List<MatOfPoint> contours = new ArrayList<>();
-        Point [] endPoints = new Point[2];
+        Point [] endPoints = new Point[2]; // This will store the two points used to make a targeting box
         
-        Core.inRange(image, Constants.VISION_THRESHOLD, Constants.WHITE, image);
-        Imgproc.dilate(image, image, new Mat(3, 3, 0));
+        Core.inRange(image, Constants.VISION_THRESHOLD, Constants.WHITE, image); // This will filter out all colours outside of the range between two colours
+        Imgproc.dilate(image, image, new Mat(3, 3, 0)); // This will help remove imperfections and noise from the image
 
-        Imgproc.findContours(image, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
+        Imgproc.findContours(image, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE); // This will find the contours of your image but will not draw them
 
         endPoints = getBoxPoints(image);
-        Imgproc.cvtColor(image, image, Imgproc.COLOR_GRAY2BGR);
+        Imgproc.cvtColor(image, image, Imgproc.COLOR_GRAY2BGR); // Converts grayscale picture back to colour
 
-        aqquireTarget(image, endPoints, contours);
+        acquireTarget(image, endPoints, contours); // This will take care of targeting
 
-        return image;
+        return image; // Sends back fully processed image
     }
 
     private Point [] getBoxPoints(Mat image)
     {
-        Rect rectangle = Imgproc.boundingRect(image);
+        Rect rectangle = Imgproc.boundingRect(image); // This determines a rectangle around the target but does not draw it
         Point [] endPoints = new Point[2];
         double [] centerPoints = {0, 0};
 
-        endPoints[0] = rectangle.tl();
-        endPoints[1] = rectangle.br();
+        endPoints[0] = rectangle.tl(); // Top left point of rectangle
+        endPoints[1] = rectangle.br(); // Top right point of rectangle
 
         height = rectangle.height;
         width = rectangle.width;
@@ -130,15 +140,14 @@ public class Vision extends SubsystemBase
         Imgproc.drawContours(image, contours, -1, Constants.GREEN, -1);
     }
 
-    private void aqquireTarget(Mat image, Point [] endPoints, List<MatOfPoint> contours)    {
-
+    private void acquireTarget(Mat image, Point [] endPoints, List<MatOfPoint> contours)
+    {
         targetDistance = ((reticle.y - targetCenter.y) * -Constants.PIXEL_TO_METRES_RATIO) + Constants.TARGET_CENTER_DISTANCE; // Negative to counteract Mat pixel ordering (top to bottom), 162cm is when reticle is centered with targetCenter, 2 represents 2cm per pixel
         calculatedShooterSpeed = (0.1633 * Math.pow(targetDistance, 3)) - (0.5561 * Math.pow(targetDistance, 2)) + (0.6154 * targetDistance) + 0.4097;
 
 
         if ((reticle.x - Constants.AIM_BOT_ACCURACY) < targetCenter.x && targetCenter.x < (reticle.x + Constants.AIM_BOT_ACCURACY))
         {
-            horizontallyAligned = true;
             turnRight = false;
             turnLeft = false;
             
@@ -146,7 +155,6 @@ public class Vision extends SubsystemBase
         }
         else if ((reticle.x - Constants.AIM_BOT_ACCURACY) < targetCenter.x)
         {
-            horizontallyAligned = false;
             turnRight = true;
             turnLeft = false;
 
@@ -154,7 +162,6 @@ public class Vision extends SubsystemBase
         }
         else if (targetCenter.x < (reticle.x + Constants.AIM_BOT_ACCURACY))
         {
-            horizontallyAligned = false;
             turnLeft = true;
             turnRight = false;
 
@@ -174,14 +181,9 @@ public class Vision extends SubsystemBase
         runFeed = false;
     }
 
-    public boolean getVisionEnabled()
+    public boolean isEnabled()
     {
         return runFeed;
-    }
-
-    public boolean getHorizontallyAligned()
-    {
-        return horizontallyAligned;
     }
 
     public boolean turnLeft()
@@ -194,13 +196,8 @@ public class Vision extends SubsystemBase
         return turnRight;
     }
 
-    public double getShooterSpeed()
+    public double getRequiredShooterSpeed()
     {
         return calculatedShooterSpeed;
-    }
-
-    public double getTargetDistance()
-    {
-        return targetDistance;
     }
 }

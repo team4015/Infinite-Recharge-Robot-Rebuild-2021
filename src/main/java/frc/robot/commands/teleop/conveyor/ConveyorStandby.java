@@ -3,6 +3,7 @@ package frc.robot.commands.teleop.conveyor;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.controls.Driver;
 
 public class ConveyorStandby extends CommandBase
 {
@@ -26,7 +27,7 @@ public class ConveyorStandby extends CommandBase
   @Override
   public void execute()
   {
-    robot.conveyor.standby(robot.driver.getSteerButton(Constants.CHARGE_SHOOTER));
+    robot.conveyor.standby(robot.driver.getChargeShooterButton());
   }
 
   // Called once the command ends or is interrupted.

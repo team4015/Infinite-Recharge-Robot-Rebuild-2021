@@ -1,6 +1,7 @@
-package frc.robot.commands;
+package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class AimBot extends CommandBase
@@ -25,17 +26,17 @@ public class AimBot extends CommandBase
     @Override
     public void execute()
     {
-        robot.shooter.setShooterSpeed(robot.vision.getShooterSpeed());
+        robot.shooter.setSpeed(robot.vision.getRequiredShooterSpeed());
         
         if (robot.vision.turnLeft())
         {
-            robot.drivetrain.move(0, -0.11);
+            robot.drivetrain.move(0, Constants.AUTO_LEFT_TURN_SPEED);
         }
         else if (robot.vision.turnRight())
         {
-            robot.drivetrain.move(0, 0.15);
+            robot.drivetrain.move(0, Constants.AUTO_RIGHT_TURN_SPEED);
         }
-        else if (!robot.vision.turnLeft() && !robot.vision.turnRight())
+        else
         {
             robot.drivetrain.stop();
         }
@@ -53,6 +54,6 @@ public class AimBot extends CommandBase
     @Override
     public boolean isFinished()
     {
-        return false;
+        return false; // AimBot will continue running until it's trigger button is released
     }
 }

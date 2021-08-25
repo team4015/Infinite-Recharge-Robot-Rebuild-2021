@@ -3,7 +3,7 @@ package frc.robot.controls;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
-import frc.robot.commands.AimBot;
+import frc.robot.commands.auto.AimBot;
 import frc.robot.Robot;
 import frc.robot.commands.teleop.intake.*;
 import frc.robot.commands.teleop.conveyor.*;
@@ -27,21 +27,34 @@ public class Driver
     private JoystickButton visionRun;
     private JoystickButton aimBot;
 
+    // BUTTON BINDINGS
+    public static final int START_COMPRESSOR = 7;
+    public static final int STOP_COMPRESSOR = 8;
+    public static final int DEPLOY_INTAKE = 6;
+    public static final int RETRACT_INTAKE = 4;
+    public static final int SPIN_INTAKE = 1;
+    public static final int REVERSE_INTAKE = 3;
+    public static final int FEED_CONVEYOR = 1;
+    public static final int REVERSE_CONVEYOR = 3;
+    public static final int CHARGE_SHOOTER = 5;
+    public static final int TOGGLE_VISION = 5;
+    public static final int RUN_AIMBOT = 2;
+
     public Driver(Robot robot)
     {
         throttle = new Joystick(Constants.THROTTLE_JOYSTICK);
         steer = new Joystick(Constants.STEER_JOYSTICK);
 
         // COMMAND BINDINGS
-        intakeSpin = new JoystickButton(steer, Constants.SPIN_INTAKE);
-        intakeReverse = new JoystickButton(steer, Constants.REVERSE_INTAKE);
-        intakeDeploy = new JoystickButton(steer, Constants.DEPLOY_INTAKE);
-        intakeRetract = new JoystickButton(steer, Constants.RETRACT_INTAKE);
-        conveyorFeed = new JoystickButton(throttle, Constants.FEED_CONVEYOR);
-        conveyorReverse = new JoystickButton(throttle, Constants.REVERSE_CONVEYOR);
-        shooterSpin = new JoystickButton(throttle, Constants.CHARGE_SHOOTER);
-        visionRun = new JoystickButton(steer, Constants.TOGGLE_VISION);
-        aimBot = new JoystickButton(steer, Constants.RUN_AIMBOT);
+        intakeSpin = new JoystickButton(steer, SPIN_INTAKE);
+        intakeReverse = new JoystickButton(steer, REVERSE_INTAKE);
+        intakeDeploy = new JoystickButton(steer, DEPLOY_INTAKE);
+        intakeRetract = new JoystickButton(steer, RETRACT_INTAKE);
+        conveyorFeed = new JoystickButton(throttle, FEED_CONVEYOR);
+        conveyorReverse = new JoystickButton(throttle, REVERSE_CONVEYOR);
+        shooterSpin = new JoystickButton(throttle, CHARGE_SHOOTER);
+        visionRun = new JoystickButton(steer, TOGGLE_VISION);
+        aimBot = new JoystickButton(steer, RUN_AIMBOT);
 
         intakeSpin.whileHeld(new IntakeSpin(robot));
         intakeReverse.whileHeld(new IntakeReverse(robot));
@@ -54,7 +67,7 @@ public class Driver
         aimBot.whenHeld(new AimBot(robot));
     }
 
-    public double getSlider()
+    public double getThrottleSlider()
     {
         return (-throttle.getThrottle() + 1) / 2;
     }
@@ -87,18 +100,18 @@ public class Driver
         return steerValue;
     }
 
-    public boolean getThrottleButton(int button)
+    private boolean getThrottleButton(int button)
     {
         return throttle.getRawButton(button);
     }
 
-    public boolean getSteerButton(int button)
+    private boolean getSteerButton(int button)
     {
         return steer.getRawButton(button);
     }
 
-    public boolean getSteerButtonPressed(int button)
+    public boolean getChargeShooterButton()
     {
-        return steer.getRawButtonPressed(button);
+        return getThrottleButton(CHARGE_SHOOTER);
     }
 }

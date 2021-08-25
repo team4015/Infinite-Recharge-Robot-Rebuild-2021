@@ -3,6 +3,7 @@ package frc.robot.commands.teleop.conveyor;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.controls.Driver;
 
 public class ConveyorFeed extends CommandBase
 {
@@ -26,7 +27,7 @@ public class ConveyorFeed extends CommandBase
   @Override
   public void execute()
   {
-    robot.conveyor.feed(robot.driver.getThrottleButton(Constants.CHARGE_SHOOTER));
+    robot.conveyor.feed(robot.driver.getChargeShooterButton());
   }
 
   // Called once the command ends or is interrupted.
