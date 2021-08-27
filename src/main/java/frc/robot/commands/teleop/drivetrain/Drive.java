@@ -1,3 +1,11 @@
+/* ==================================================
+Authour: Shane Pinto
+Description: Drive.java is a command that will send
+the joystick readings to the drivetrain subsystem
+in order to write a speed to the motors so that the
+robot can move according to joystick input.
+================================================== */
+
 package frc.robot.commands.teleop.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;

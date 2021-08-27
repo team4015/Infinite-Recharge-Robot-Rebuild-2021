@@ -1,3 +1,11 @@
+/* ==================================================
+Authour: Shane Pinto
+Description: Match.java simply creates an instance of 
+Robot.java so that the subsystems can be interacted
+with. It also starts up the scheduler so that commands 
+can be scheduled.
+================================================== */
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -16,7 +24,7 @@ public class Match extends TimedRobot
   @Override
   public void robotInit()
   {
-    robot = new Robot();
+    robot = new Robot(); // Creates instance of Robot.java
   }
 
   /**
@@ -29,8 +37,7 @@ public class Match extends TimedRobot
   @Override
   public void robotPeriodic()
   {
-    // Runs the Scheduler.
-    CommandScheduler.getInstance().run();
+    CommandScheduler.getInstance().run(); // Runs the Scheduler.
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

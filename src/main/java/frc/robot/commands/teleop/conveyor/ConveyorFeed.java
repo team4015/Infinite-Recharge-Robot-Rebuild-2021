@@ -1,9 +1,14 @@
+/* ==================================================
+Authour: Shane Pinto
+Description: ConveyorFeed.java is a command that
+will tell the conveyor subsystem to spin the conveyor
+to intake the balls.
+================================================== */
+
 package frc.robot.commands.teleop.conveyor;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.controls.Driver;
 
 public class ConveyorFeed extends CommandBase
 {

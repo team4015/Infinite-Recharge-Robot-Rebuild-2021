@@ -1,3 +1,9 @@
+/* ==================================================
+Authour: Shane Pinto
+Description: ShooterStop.java is a command that tells
+the shooter subsystem to stop spinning the shooter.
+================================================== */
+
 package frc.robot.commands.teleop.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;

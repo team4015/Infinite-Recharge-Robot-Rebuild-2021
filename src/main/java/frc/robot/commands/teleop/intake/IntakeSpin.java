@@ -1,3 +1,10 @@
+/* ==================================================
+Authour: Shane Pinto
+Description: IntakeSpin.java is a command that
+tells the intake subsystem to spin the intake to 
+intake balls.
+================================================== */
+
 package frc.robot.commands.teleop.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;

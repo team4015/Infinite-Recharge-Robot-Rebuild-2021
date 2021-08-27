@@ -1,3 +1,10 @@
+/* ==================================================
+Authour: Shane Pinto
+Description: Driver.java contains most of the code
+that handles button binding, joystick reading, and
+command binding.
+================================================== */
+
 package frc.robot.controls;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -14,9 +21,11 @@ import java.lang.Math;
 
 public class Driver
 {
+    // JOYSTICK CONTROLLERS
     private Joystick throttle;
     private Joystick steer;
 
+    // BUTTONS
     private JoystickButton intakeSpin;
     private JoystickButton intakeReverse;
     private JoystickButton intakeDeploy;
@@ -45,7 +54,8 @@ public class Driver
         throttle = new Joystick(Constants.THROTTLE_JOYSTICK);
         steer = new Joystick(Constants.STEER_JOYSTICK);
 
-        // COMMAND BINDINGS
+        // JOYSTICK BINDINGS
+        // These instantiations will bind the JoystickButtons to a physical button on the joystick
         intakeSpin = new JoystickButton(steer, SPIN_INTAKE);
         intakeReverse = new JoystickButton(steer, REVERSE_INTAKE);
         intakeDeploy = new JoystickButton(steer, DEPLOY_INTAKE);
@@ -56,6 +66,8 @@ public class Driver
         visionRun = new JoystickButton(steer, TOGGLE_VISION);
         aimBot = new JoystickButton(steer, RUN_AIMBOT);
 
+        // COMMAND BINDINGS
+        // These function calls will tell the buttons which commands to call when they are in a certain state
         intakeSpin.whileHeld(new IntakeSpin(robot));
         intakeReverse.whileHeld(new IntakeReverse(robot));
         intakeDeploy.whenPressed(new IntakeDeploy(robot));
@@ -67,11 +79,24 @@ public class Driver
         aimBot.whenHeld(new AimBot(robot));
     }
 
+    /* =====================================
+    getThrottleSlider() returns the current
+    value of the slider on the throttle
+    joystick. It will also set it to a value
+    between 0 and 1.
+    ===================================== */
     public double getThrottleSlider()
     {
         return (-throttle.getThrottle() + 1) / 2;
     }
 
+    /* =====================================
+    getThrottle() will return the current
+    value of thhe Y-Axis of the throttle
+    joystick. It will also handle adjusting
+    the reading according to the deadzone,
+    and according to the max throttle speed.
+    ===================================== */
     public double getThrottle()
     {
         double throttleValue = 0;
@@ -86,6 +111,13 @@ public class Driver
         return throttleValue;
     }
 
+    /* =====================================
+    getSteer() will return the current
+    value of thhe X-Axis of the steer
+    joystick. It will also handle adjusting
+    the reading according to the deadzone,
+    and according to the max steer speed.
+    ===================================== */
     public double getSteer()
     {
         double steerValue = 0;
@@ -100,16 +132,31 @@ public class Driver
         return steerValue;
     }
 
+    /* =====================================
+    getThrottleButton() will return the 
+    value of the button passed to the
+    function on the throttle joystick.
+    ===================================== */
     private boolean getThrottleButton(int button)
     {
         return throttle.getRawButton(button);
     }
 
+    /* =====================================
+    getSteerButton() will return the 
+    value of the button passed to the
+    function on the steer joystick.
+    ===================================== */
     private boolean getSteerButton(int button)
     {
         return steer.getRawButton(button);
     }
 
+    /* =====================================
+    getChargeShooterButton() will return the
+    current value of the shooter charging 
+    button on the throttle joystick.
+    ===================================== */
     public boolean getChargeShooterButton()
     {
         return getThrottleButton(CHARGE_SHOOTER);

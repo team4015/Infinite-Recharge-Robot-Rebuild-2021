@@ -1,3 +1,14 @@
+/* ==================================================
+Authour: Shane Pinto
+Description: AimBot.java is an autonomous command
+that uses the vision processing abilities of the 
+vision subsystem to assist with targeting. This 
+command will take over robot control, align the robot
+with a target, and select the necessary shooter 
+speed required to hit the target at the robot's
+current distance from the target.
+================================================== */
+
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -23,6 +34,13 @@ public class AimBot extends CommandBase
     }
 
     // Called every time the scheduler runs while the command is scheduled.
+    /* =====================================
+    execute() will use the vision, shooter,
+    and drivetrain subsystems to align the
+    robot with the target, and then set
+    the needed shooter speed to hit the
+    target at the current distance.
+    ===================================== */
     @Override
     public void execute()
     {

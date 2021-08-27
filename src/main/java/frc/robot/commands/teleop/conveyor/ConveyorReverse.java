@@ -1,3 +1,10 @@
+/* ==================================================
+Authour: Shane Pinto
+Description: ConveyorReverse.java is a command that
+will tell the conveyor subsystem to reverse the 
+conveyor to outake the balls.
+================================================== */
+
 package frc.robot.commands.teleop.conveyor;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -26,7 +33,7 @@ public class ConveyorReverse extends CommandBase
   public void execute()
   {
       robot.conveyor.reverse();
-      robot.intake.reverse();
+      robot.intake.reverse(); // Intake must also be reverse so that balls can exit the robot
   }
 
   // Called once the command ends or is interrupted.

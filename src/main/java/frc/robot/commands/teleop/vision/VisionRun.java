@@ -1,3 +1,11 @@
+/* ==================================================
+Authour: Shane Pinto
+Description: VisionRun.java is a command that tells
+the vision subsystem to toggle between being enabled
+and disabled. This will turn the processing feed on
+and off.
+================================================== */
+
 package frc.robot.commands.teleop.vision;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;

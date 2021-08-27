@@ -1,6 +1,10 @@
-package frc.robot.commands.teleop.shooter;
+/* ==================================================
+Authour: Shane Pinto
+Description: ShooterSpin.java is a command that tells
+the shooter subsystem to spin the shooter.
+================================================== */
 
-import javax.swing.plaf.synth.SynthTabbedPaneUI;
+package frc.robot.commands.teleop.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;

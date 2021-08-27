@@ -1,9 +1,15 @@
+/* ==================================================
+Authour: Shane Pinto
+Description: ConveyorStandby.java is a command that
+will tell the conveyor subsystem to wait for a ball
+to enter the robot, then move it along the storage
+bay to make room for the next ball.
+================================================== */
+
 package frc.robot.commands.teleop.conveyor;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.controls.Driver;
 
 public class ConveyorStandby extends CommandBase
 {

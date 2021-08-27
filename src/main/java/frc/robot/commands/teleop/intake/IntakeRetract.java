@@ -1,3 +1,10 @@
+/* ==================================================
+Authour: Shane Pinto
+Description: IntakeRetract.java is a command that 
+tells the intake subsystem to retract the intake 
+piston.
+================================================== */
+
 package frc.robot.commands.teleop.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;

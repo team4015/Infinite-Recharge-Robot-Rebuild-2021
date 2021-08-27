@@ -1,3 +1,10 @@
+/* ==================================================
+Authour: Shane Pinto
+Description: IntakeReverse.java is a command that
+tells the intake subsystem to reverse the spin of
+the intake to outake balls.
+================================================== */
+
 package frc.robot.commands.teleop.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
